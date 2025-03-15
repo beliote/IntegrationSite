@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Calendrier ICS - Vue Hebdomadaire</title>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <link rel="icon" href="images/ongletblack.ico" type="image/x-icon">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,700,900">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css" id="main-styles-link">
+  <style>
+    .ie-panel {
+      display: none;
+      background: #212121;
+      padding: 10px 0;
+      box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);
+      clear: both;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {
+      display: block;
+    }
+
+    :root {
+      --numDays: 7;
+      --numHours: 25;
+      --timeHeight: 30px; /* Hauteur d'une heure */
+      --calBgColor: #fff1f8;
+      --eventBorderColor: #f2d3d8;
+      --eventColor1: #ffd6d1;
+      --eventColor2: #fafaa3;
+      --eventColor3: #e2f8ff;
+      --eventColor4: #d1ffe6;
+      --eventColor5: #fcc796;
+    }
+
+    /* Le calendrier global à 2 colonnes : timeline et jours */
+    .calendar {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: auto 1fr;
+      margin: 2rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    /* Timeline : on utilise un conteneur en position relative
+       dont la hauteur correspond à 24 heures */
+    .timeline {
+      display: grid;
+      position: relative;
+      height: calc(var(--numHours) * var(--timeHeight));
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      margin-top: 40px;
+      border-right: none;
+      /* Optionnel : largeur fixe pour la timeline */
+      width: 70px;
+      
+    }
+    /* Les marqueurs d'heure, positionnés absolument,
+       uniquement pour les heures paires */
+    .time-marker {
+      position: absolute;
+      transform: translateX(100%); /* s'affiche à droite du trait */
+      font-size: clamp(0.6rem, 0.8vw, 1.3rem);
+    }
+
+    /* Conteneur des jours (colonnes) */
+    .days {
+      display: grid;
+      grid-template-columns: repeat(var(--numDays), 1fr);
+      gap: 5px;
+      margin-left: 45px;
+    }
+
+    /* Pour chaque jour, la date est affichée en haut */
+    .day .date {
+      display: flex;
+      gap: 0.5em;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+    }
+
+    .day {
+      display: flex;
+      flex-direction: column; /* Empile la date en haut, puis .events en bas */
+    }
+
+    .date-num {
+      font-size: clamp(0.5rem, 2vw, 2rem);
+      font-weight: 400;
+    }
+    .date-day {
+      font-size: clamp(0.5rem, 3vw, 2rem);
+      font-weight: 100;
+    }
+
+    /* Conteneur des événements : position relative pour placer des events en absolute */
+    .events {
+      position: relative;
+      height: calc(var(--numHours) * var(--timeHeight));
+      background: var(--calBgColor);
+      border-radius: 5px;
+    }
+
+    /* Style commun aux événements */
+    .event {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      border: 1px solid var(--eventBorderColor);
+      border-radius: 5px;
+      padding: 0.5rem;
+      background: white;
+      box-sizing: border-box;
+    }
+    .event p {
+      margin: 0;
+    }
+    .title {
+      font-size: clamp(0.8rem, 1vw, 2rem);
+      font-weight: 600;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .time {
+      font-size: clamp(0.7rem, 0.5vw, 2rem);
+      font-weight: 100;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    /* Couleurs pour différencier les événements */
+    .corp-fi { background: var(--eventColor1); }
+    .repas  { background: var(--eventColor2); }
+    .activite  { background: var(--eventColor3); }
+    .tonus { background: var(--eventColor4); }
+    .we { background: var(--eventColor5); }
+
+
+    body {
+      font-family: system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"></a></div>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/infinity.js"></script>
+  <div class="preloader">
+    <div class="preloader-body">
+      <div class="cssload-container">
+        <l-infinity size="88" stroke="10" stroke-length="0.5" bg-opacity="0.05" speed="1.5" color="#fcb00b"></l-infinity>
+      </div>
+    </div>
+  </div>
+  <div class="page">
+    <!-- Page Header-->
+    <header class="section page-header">
+      <!-- RD Navbar-->
+      <div class="rd-navbar-wrap rd-navbar-absolute">
+        <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+          <div class="rd-navbar-main-outer">
+            <div class="rd-navbar-main">
+              <!-- RD Navbar Panel-->
+              <div class="rd-navbar-panel">
+                <!-- RD Navbar Toggle-->
+                <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                <!-- RD Navbar Brand-->
+                <div class="rd-navbar-brand"><a class="brand" href="index.html"><img src="images/Inte2024R.png" alt="" width="151" height="22"/></a>
+                </div>
+              </div>
+              <div class="rd-navbar-main-element">
+                <div class="rd-navbar-nav-wrap">
+                  <!-- RD Navbar Nav-->
+                  <ul class="rd-navbar-nav">
+                    <li class="rd-nav-item"><a class="rd-nav-link" href="InteNantes.html">Accueil</a>
+                    </li>
+                    <li class="rd-nav-item dropdown">
+                      <a class="rd-nav-link" href="#">Vie étudiante</a>
+                      <ul class="rd-menu">
+                        <li><a href="Fede.html">Fédé & Bureaux</a></li>
+                        <li><a href="Modalites.html">Modalités rentrée</a></li>
+                      </ul>
+                    </li>
+                    <li class="rd-nav-item active dropdown">
+                      <a class="rd-nav-link" href="#">Intégration 2025</a>
+                      <ul class="rd-menu">
+                        <li><a href="InteNantes.html">Nantes</a></li>
+                        <li><a href="InteBrest.html">Brest</a></li>
+                      </ul>
+                    </li>
+                    <li class="rd-nav-item"><a class="rd-nav-link" href="Contact.html">Nous contacter</a>
+                    </li>
+                    <li class="rd-nav-item"><a class="rd-nav-link icon icon-meta mdi mdi-instagram" href="https://www.instagram.com/imt.emporel/"></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <section class="section section-bredcrumbs" style="background: url(images/Inte2024.webp) no-repeat center">
+      <div class="container context-dark breadcrumb-wrapper text-left">
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+      </div>
+    </section>
+
+    <!-- Exemple pour Semaine 1 -->
+    <section class="section section-lg bg-gray-100" id="Event">
+      <h1 class="custom-title text-center"><span>Planning Intégration - Campus de Nantes</span></h1>
+      <br><br>
+      <h2 class="custom-title text-center"><span>Semaine 1 - Découverte</span></h2>
+      <div class="calendar">
+        <!-- Timeline : uniquement les heures paires affichées -->
+        <div class="timeline">
+          <div class="time-marker" style="top: calc(1 * var(--timeHeight));">01:00</div>
+          <div class="time-marker" style="top: calc(3 * var(--timeHeight));">03:00</div>
+          <div class="time-marker" style="top: calc(5 * var(--timeHeight));">05:00</div>
+          <div class="time-marker" style="top: calc(7 * var(--timeHeight));">07:00</div>
+          <div class="time-marker" style="top: calc(9 * var(--timeHeight));">09:00</div>
+          <div class="time-marker" style="top: calc(11 * var(--timeHeight));">11:00</div>
+          <div class="time-marker" style="top: calc(13 * var(--timeHeight));">13:00</div>
+          <div class="time-marker" style="top: calc(15 * var(--timeHeight));">15:00</div>
+          <div class="time-marker" style="top: calc(17 * var(--timeHeight));">17:00</div>
+          <div class="time-marker" style="top: calc(19 * var(--timeHeight));">19:00</div>
+          <div class="time-marker" style="top: calc(21 * var(--timeHeight));">21:00</div>
+          <div class="time-marker" style="top: calc(23 * var(--timeHeight));">23:00</div>
+        </div>
+        <!-- Jours -->
+        <div class="days">
+          <!-- Lundi -->
+          <div class="day mon">
+            <div class="date">
+              <p class="date-num">18.08</p>
+              <p class="date-day">Mon</p>
+            </div>
+            <div class="events"> </div>
+          </div>
+          <!-- Mardi -->
+          <div class="day tues">
+            <div class="date">
+              <p class="date-num">19.08</p>
+              <p class="date-day">Tue</p>
+            </div>
+            <div class="events"> </div>
+          </div>
+          <!-- Mercredi -->
+          <div class="day wed">
+            <div class="date">
+              <p class="date-num">20.08</p>
+              <p class="date-day">Wed</p>
+            </div>
+            <div class="events"> </div>
+          </div>
+          <!-- Jeudi -->
+          <div class="day thurs">
+            <div class="date">
+              <p class="date-num">21.08</p>
+              <p class="date-day">Thu</p>
+            </div>
+            <div class="events">
+              <div class="event corp-fi" style="top: calc(8 * var(--timeHeight)); height: calc(10 * var(--timeHeight));">
+                <p class="title">Accueil des premiers élèves</p>
+                <p class="time">08:00 - 18:00</p>
+              </div>
+              <div class="event repas" style="top: calc(19 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Barbecue</p>
+                <p class="time">19:00 - 22:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Vendredi -->
+          <div class="day fri">
+            <div class="date">
+              <p class="date-num">22.08</p>
+              <p class="date-day">Fri</p>
+            </div>
+            <div class="events">
+              <div class="event repas" style="top: calc(19 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Repas des régions</p>
+                <p class="time">19:00 - 22:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Samedi -->
+          <div class="day sat">
+            <div class="date">
+              <p class="date-num">23.08</p>
+              <p class="date-day">Sat</p>
+            </div>
+            <div class="events">
+              <div class="event repas" style="top: calc(11 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Brunch</p>
+                <p class="time">11:00 - 14:00</p>
+              </div>
+
+              <div class="event activite" style="top: calc(19 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Rallye des batîments</p>
+                <p class="time">19:00 - 22:00</p>
+              </div>
+
+              <div class="event tonus" style="top: calc(22 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Soirée ABC</p>
+                <p class="time">22:00 - 04:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Dimanche -->
+          <div class="day sun">
+            <div class="date">
+              <p class="date-num">24.08</p>
+              <p class="date-day">Sun</p>
+            </div>
+            <div class="events">
+              <div class="event tonus" style="top: calc(0 * var(--timeHeight)); height: calc(4 * var(--timeHeight));">
+                <p class="title">Soirée ABC</p>
+                <p class="time">22:00 - 04:00</p>
+              </div>
+
+              <div class="event repas" style="top: calc(11 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Brunch</p>
+                <p class="time">11:00 - 14:00</p>
+              </div>
+
+              <div class="event activite" style="top: calc(14 * var(--timeHeight)); height: calc(5 * var(--timeHeight));">
+                <p class="title">Rallye Nantais</p>
+                <p class="time">14:00 - 19:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exemple pour Semaine 2 -->
+      <br>
+      <h2 class="custom-title text-center"><span>Semaine 2 - Adaptation</span></h2>
+      <div class="calendar">
+        <div class="timeline">
+          <div class="time-marker" style="top: calc(1 * var(--timeHeight));">01:00</div>
+          <div class="time-marker" style="top: calc(3 * var(--timeHeight));">03:00</div>
+          <div class="time-marker" style="top: calc(5 * var(--timeHeight));">05:00</div>
+          <div class="time-marker" style="top: calc(7 * var(--timeHeight));">07:00</div>
+          <div class="time-marker" style="top: calc(9 * var(--timeHeight));">09:00</div>
+          <div class="time-marker" style="top: calc(11 * var(--timeHeight));">11:00</div>
+          <div class="time-marker" style="top: calc(13 * var(--timeHeight));">13:00</div>
+          <div class="time-marker" style="top: calc(15 * var(--timeHeight));">15:00</div>
+          <div class="time-marker" style="top: calc(17 * var(--timeHeight));">17:00</div>
+          <div class="time-marker" style="top: calc(19 * var(--timeHeight));">19:00</div>
+          <div class="time-marker" style="top: calc(21 * var(--timeHeight));">21:00</div>
+          <div class="time-marker" style="top: calc(23 * var(--timeHeight));">23:00</div>
+        </div>
+        <div class="days">
+          <!-- Lundi -->
+          <div class="day mon">
+            <div class="date">
+              <p class="date-num">25.08</p>
+              <p class="date-day">Mon</p>
+            </div>
+            <div class="events">
+              <div class="event repas" style="top: calc(11 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Brunch</p>
+                <p class="time">11:00 - 14:00</p>
+              </div>
+
+              <div class="event activite" style="top: calc(15 * var(--timeHeight)); height: calc(4 * var(--timeHeight));">
+                <p class="title">Inte Contest</p>
+                <p class="time">15:00 - 19:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Mardi -->
+          <div class="day tues">
+            <div class="date">
+              <p class="date-num">26.08</p>
+              <p class="date-day">Tue</p>
+            </div>
+            <div class="events">
+              <div class="event repas" style="top: calc(11 * var(--timeHeight)); height: calc(3 * var(--timeHeight));">
+                <p class="title">Brunch</p>
+                <p class="time">11:00 - 14:00</p>
+              </div>
+
+              <div class="event tonus" style="top: calc(20 * var(--timeHeight)); height: calc(5 * var(--timeHeight));">
+                <p class="title">Soirée BDS</p>
+                <p class="time">20:00 - 01:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Mercredi -->
+          <div class="day wed">
+            <div class="date">
+              <p class="date-num">27.08</p>
+              <p class="date-day">Wed</p>
+            </div>
+            <div class="events">
+              <div class="event tonus" style="top: calc(0 * var(--timeHeight)); height: calc(1 * var(--timeHeight));">
+              </div>
+
+              <div class="event corp-fi" style="top: calc(8 * var(--timeHeight)); height: calc(4 * var(--timeHeight));">
+                <p class="title">Rentrée FISE A1</p>
+                <p class="time">08:00 - 12:00</p>
+              </div>
+
+              <div class="event activite" style="top: calc(17 * var(--timeHeight)); height: calc(2 * var(--timeHeight));">
+                <p class="title">Présentation Oli'mpte</p>
+                <p class="time">17:00 - 19:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Jeudi -->
+          <div class="day thurs">
+            <div class="date">
+              <p class="date-num">28.08</p>
+              <p class="date-day">Thu</p>
+            </div>
+            <div class="events"> </div>
+          </div>
+          <!-- Vendredi -->
+          <div class="day fri">
+            <div class="date">
+              <p class="date-num">29.08</p>
+              <p class="date-day">Fri</p>
+            </div>
+            <div class="events">
+              <!-- Aucun événement -->
+            </div>
+          </div>
+          <!-- Samedi -->
+          <div class="day sat">
+            <div class="date">
+              <p class="date-num">30.08</p>
+              <p class="date-day">Sat</p>
+            </div>
+            <div class="events">
+              <div class="event we" style="top: calc(6 * var(--timeHeight)); height: calc(19 * var(--timeHeight));">
+                <p class="title">WEC</p>
+              </div>
+            </div>
+          </div>
+          <!-- Dimanche -->
+          <div class="day sun">
+            <div class="date">
+              <p class="date-num">31.08</p>
+              <p class="date-day">Sun</p>
+            </div>
+            <div class="events">
+              <div class="event we" style="top: calc(0 * var(--timeHeight)); height: calc(17 * var(--timeHeight));">
+                <p class="title">WEC</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exemple pour Semaine 3 -->
+      <br>
+      <h2 class="custom-title text-center"><span>Semaine 3 - Cohésion</span></h2>
+      <div class="calendar">
+        <div class="timeline">
+          <div class="time-marker" style="top: calc(1 * var(--timeHeight));">01:00</div>
+          <div class="time-marker" style="top: calc(3 * var(--timeHeight));">03:00</div>
+          <div class="time-marker" style="top: calc(5 * var(--timeHeight));">05:00</div>
+          <div class="time-marker" style="top: calc(7 * var(--timeHeight));">07:00</div>
+          <div class="time-marker" style="top: calc(9 * var(--timeHeight));">09:00</div>
+          <div class="time-marker" style="top: calc(11 * var(--timeHeight));">11:00</div>
+          <div class="time-marker" style="top: calc(13 * var(--timeHeight));">13:00</div>
+          <div class="time-marker" style="top: calc(15 * var(--timeHeight));">15:00</div>
+          <div class="time-marker" style="top: calc(17 * var(--timeHeight));">17:00</div>
+          <div class="time-marker" style="top: calc(19 * var(--timeHeight));">19:00</div>
+          <div class="time-marker" style="top: calc(21 * var(--timeHeight));">21:00</div>
+          <div class="time-marker" style="top: calc(23 * var(--timeHeight));">23:00</div>
+        </div>
+        <div class="days">
+          <!-- Lundi -->
+          <div class="day mon">
+            <div class="date">
+              <p class="date-num">01.09</p>
+              <p class="date-day">Mon</p>
+            </div>
+            <div class="events">
+              
+            </div>
+          </div>
+          <!-- Mardi -->
+          <div class="day tues">
+            <div class="date">
+              <p class="date-num">02.09</p>
+              <p class="date-day">Tue</p>
+            </div>
+            <div class="events">
+              
+            </div>
+          </div>
+          <!-- Mercredi -->
+          <div class="day wed">
+            <div class="date">
+              <p class="date-num">03.09</p>
+              <p class="date-day">Wed</p>
+            </div>
+            <div class="events">
+              <div class="event tonus" style="top: calc(21 * var(--timeHeight)); height: calc(4 * var(--timeHeight));">
+                <p class="title">Cabaret BDA</p>
+                <p class="time">21:00 - 01:00</p>
+              </div>
+            </div>
+          </div>
+          <!-- Jeudi -->
+          <div class="day thurs">
+            <div class="date">
+              <p class="date-num">04.09</p>
+              <p class="date-day">Thu</p>
+            </div>
+            <div class="events">
+              <div class="event tonus" style="top: calc(0 * var(--timeHeight)); height: calc(1 * var(--timeHeight));">
+              </div>
+            </div>
+          </div>
+          <!-- Vendredi -->
+          <div class="day fri">
+            <div class="date">
+              <p class="date-num">05.09</p>
+              <p class="date-day">Fri</p>
+            </div>
+            <div class="events">
+              <div class="event we" style="top: calc(12 * var(--timeHeight)); height: calc(13 * var(--timeHeight));">
+                <p class="title">WEI</p>
+              </div>
+            </div>
+          </div>
+          <!-- Samedi -->
+          <div class="day sat">
+            <div class="date">
+              <p class="date-num">06.09</p>
+              <p class="date-day">Sat</p>
+            </div>
+            <div class="events">
+              <div class="event we" style="top: calc(0 * var(--timeHeight)); height: calc(25 * var(--timeHeight));">
+                <p class="title">WEI</p>
+              </div>
+            </div>
+          </div>
+          <!-- Dimanche -->
+          <div class="day sun">
+            <div class="date">
+              <p class="date-num">07.09</p>
+              <p class="date-day">Sun</p>
+            </div>
+            <div class="events">
+              <div class="event we" style="top: calc(0 * var(--timeHeight)); height: calc(15 * var(--timeHeight));">
+                <p class="title">WEI</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section footer-2">
+      <div class="container">
+        <p class="text-center"><span>&copy;&nbsp;</span><span class="copyright-year"></span> <span>BDE IMT Atlantique</span></p>
+      </div>
+    </footer>
+  </div>
+  <div class="snackbars" id="form-output-global"></div>
+  <!-- Javascript -->
+  <script src="js/core.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

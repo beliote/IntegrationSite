@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendrier ICS - Vue Hebdomadaire</title>
+  
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f9; }
+    /* En-tête de navigation de semaine */
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      background-color: #4285F4;
+      color: white;
+    }
+    .header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      margin: 0 20px;
+    }
+    #week-range { font-size: 16px; font-weight: bold; }
+    /* En-tête des jours (colonne de gauche vide pour la colonne des horaires) */
+    .day-headers {
+      display: grid;
+      grid-template-columns: 100px repeat(7, 1fr);
+      width: 90vw;
+      margin: 0 auto;
+    }
+    .day-header {
+      text-align: center;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+    }
+    /* Calendrier principal */
+    #calendar {
+      display: grid;
+      grid-template-columns: 100px repeat(7, 1fr);
+      width: 90vw;
+      height: 700px;
+      margin: auto;
+      border: 1px solid #ccc;
+      position: relative;
+    }
+    /* Colonne des horaires */
+    .time-column {
+      grid-column: 1;
+      display: grid;
+      grid-template-rows: repeat(24, 1fr);
+      background-color: #f0f0f0;
+      border-right: 1px solid #ccc;
+    }
+    .time-column div {
+      border-bottom: 1px solid #ddd;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Colonnes des jours */
+    .day {
+      position: relative;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      overflow: hidden;
+    }
+    .day:last-child { border-right: none; }
+    /* Bloc d’événement */
+    .event {
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      background-color: rgba(0,123,255,0.7);
+      color: white;
+      font-size: 12px;
+      border-radius: 5px;
+      padding: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- En-tête de navigation de semaine -->
+  <div class="header">
+    <button onclick="prevWeek()">◀</button>
+    <span id="week-range"></span>
+    <button onclick="nextWeek()">▶</button>
+  </div>
+
+  <!-- En-tête des jours -->
+  <div class="day-headers">
+    <div class="day-header"></div> <!-- Colonne vide pour la colonne des horaires -->
+    <div class="day-header" id="header-0"></div>
+    <div class="day-header" id="header-1"></div>
+    <div class="day-header" id="header-2"></div>
+    <div class="day-header" id="header-3"></div>
+    <div class="day-header" id="header-4"></div>
+    <div class="day-header" id="header-5"></div>
+    <div class="day-header" id="header-6"></div>
+  </div>
+
+  <!-- Calendrier (colonne des horaires + 7 colonnes pour les jours) -->
+  <div id="calendar">
+    <!-- Colonne des horaires -->
+    <div class="time-column">
+      <div>00:00</div>
+      <div>01:00</div>
+      <div>02:00</div>
+      <div>03:00</div>
+      <div>04:00</div>
+      <div>05:00</div>
+      <div>06:00</div>
+      <div>07:00</div>
+      <div>08:00</div>
+      <div>09:00</div>
+      <div>10:00</div>
+      <div>11:00</div>
+      <div>12:00</div>
+      <div>13:00</div>
+      <div>14:00</div>
+      <div>15:00</div>
+      <div>16:00</div>
+      <div>17:00</div>
+      <div>18:00</div>
+      <div>19:00</div>
+      <div>20:00</div>
+      <div>21:00</div>
+      <div>22:00</div>
+      <div>23:00</div>
+    </div>
+    <!-- Colonnes pour chaque jour -->
+    <div class="day" id="day-0"></div>
+    <div class="day" id="day-1"></div>
+    <div class="day" id="day-2"></div>
+    <div class="day" id="day-3"></div>
+    <div class="day" id="day-4"></div>
+    <div class="day" id="day-5"></div>
+    <div class="day" id="day-6"></div>
+  </div>
+
+  <script>
+    let currentDate = new Date();
+    let events = [];
+    const calendarHeight = 700; // hauteur en pixels de la grille horaire
+
+    // Charge le fichier ICS (ici en local, ex: "PASS.ics")
+    async function loadICS(url) {
+      try {
+        let response = await fetch(url);
+        let data = await response.text();
+        parseICS(data);
+      } catch (error) {
+        console.error("Erreur lors du chargement du fichier ICS :", error);
+      }
+    }
+
+    // Analyse le fichier ICS et stocke les événements dans le tableau events
+    function parseICS(icsText) {
+      let lines = icsText.split(/\r?\n/);
+      let event = {};
+      events = [];
+      for (let line of lines) {
+        if (line.startsWith("BEGIN:VEVENT")) {
+          event = {};
+        } else if (line.startsWith("DTSTART")) {
+          let dateStr = line.split(":")[1].trim();
+          event.start = parseICSTime(dateStr);
+        } else if (line.startsWith("DTEND")) {
+          let dateStr = line.split(":")[1].trim();
+          event.end = parseICSTime(dateStr);
+        } else if (line.startsWith("SUMMARY")) {
+          event.title = line.split(":")[1];
+        } else if (line.startsWith("END:VEVENT")) {
+          events.push(event);
+        }
+      }
+      generateCalendar(currentDate);
+    }
+
+    // Convertit une date au format ICS en objet Date
+    function parseICSTime(icsDate) {
+      let year = icsDate.substring(0,4);
+      let month = icsDate.substring(4,6) - 1;
+      let day = icsDate.substring(6,8);
+      let hour = icsDate.length > 8 ? icsDate.substring(9,11) : "00";
+      let minute = icsDate.length > 8 ? icsDate.substring(11,13) : "00";
+      return new Date(year, month, day, hour, minute);
+    }
+
+    // Génère l'affichage du calendrier pour la semaine correspondant à la date donnée
+    function generateCalendar(date) {
+      // Détermine le début de la semaine (dimanche à 00:00)
+      let startOfWeek = new Date(date);
+      startOfWeek.setHours(0,0,0,0);
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+      
+      // Met à jour les en-têtes des jours
+      const dayNames = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+      for (let i = 0; i < 7; i++) {
+        let headerDate = new Date(startOfWeek);
+        headerDate.setDate(headerDate.getDate() + i);
+        document.getElementById(`header-${i}`).textContent = dayNames[i] + " " + headerDate.toLocaleDateString();
+      }
+      
+      let endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(endOfWeek.getDate() + 7);
+      
+      document.getElementById("week-range").textContent =
+        `${startOfWeek.toLocaleDateString()} - ${new Date(endOfWeek.getTime()-1).toLocaleDateString()}`;
+      
+      // Vider les colonnes des jours
+      for (let i = 0; i < 7; i++) {
+        document.getElementById(`day-${i}`).innerHTML = "";
+      }
+      
+      // Pour chaque événement, afficher la portion correspondant à chaque jour sur lequel il s'étend
+      events.forEach(event => {
+        // Pour chaque jour de la semaine affichée
+        for (let i = 0; i < 7; i++) {
+          let dayStart = new Date(startOfWeek);
+          dayStart.setDate(dayStart.getDate() + i);
+          let dayEnd = new Date(dayStart);
+          dayEnd.setDate(dayEnd.getDate() + 1);
+          
+          // Vérifie si l'événement chevauche ce jour
+          if (event.end <= dayStart || event.start >= dayEnd) continue;
+          
+          // Pour ce jour, calcule la portion à afficher
+          let displayStart = event.start < dayStart ? dayStart : event.start;
+          let displayEnd = event.end > dayEnd ? dayEnd : event.end;
+          
+          // Calcul en pixels
+          let startHour = displayStart.getHours() + displayStart.getMinutes()/60;
+          let endHour = displayEnd.getHours() + displayEnd.getMinutes()/60;
+          let topPx = (startHour / 24) * calendarHeight;
+          let heightPx = ((endHour - startHour) / 24) * calendarHeight;
+          
+          let eventBlock = document.createElement("div");
+          eventBlock.classList.add("event");
+          eventBlock.style.top = topPx + "px";
+          eventBlock.style.height = heightPx + "px";
+          eventBlock.textContent = event.title + " (" +
+            displayStart.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + " - " +
+            displayEnd.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + ")";
+          
+          document.getElementById(`day-${i}`).appendChild(eventBlock);
+        }
+      });
+    }
+
+    function prevWeek() {
+      currentDate.setDate(currentDate.getDate() - 7);
+      generateCalendar(currentDate);
+    }
+    function nextWeek() {
+      currentDate.setDate(currentDate.getDate() + 7);
+      generateCalendar(currentDate);
+    }
+    
+    // Chargez le fichier ICS (assurez-vous que "PASS.ics" est accessible localement ou via une URL autorisée)
+    loadICS("Inte.ics");
+  </script>
+
+</body>
+</html>
