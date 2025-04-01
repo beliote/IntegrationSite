@@ -79,6 +79,14 @@ footer .colonnes{
   flex-wrap: wrap;
   justify-content: space-between;
 }
+/* Style des liens dans le pied de page */
+footer a {
+  text-decoration: none; /* Supprime le soulignement */
+  color: inherit; /* Utilise la couleur du texte environnant */
+}
+footer a:visited {
+  color: inherit; /* Empêche la couleur violette pour les liens visités */
+}
 /* Fin du pied de page */
 
 @media screen and (max-width: 640px){

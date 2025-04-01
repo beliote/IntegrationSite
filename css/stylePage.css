@@ -213,6 +213,7 @@ footer p:hover {
     flex-direction: column;
     align-items: center;
     text-align: center;
+	margin-top: 10px; /* Ajoute un espace au-dessus des images */
   }
   
   .image-caption {
@@ -220,6 +221,47 @@ footer p:hover {
     font-size: 14px;
     color: #ccc;
   }
+
+  /* Conteneur principal des boutons et des images */
+#image-container2 {
+	display: flex;
+	flex-direction: column; /* Aligne les boutons et les images verticalement */
+	align-items: center; /* Centre les éléments horizontalement */
+	gap: 20px; /* Ajoute un espace entre les boutons et les images */
+  }
+  
+  /* Conteneur des boutons */
+  #image-container2 .dynamic-buttons {
+	display: flex; /* Aligne les boutons horizontalement */
+	flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si nécessaire */
+	justify-content: center; /* Centre les boutons horizontalement */
+	gap: 10px; /* Ajoute un espace entre les boutons */
+  }
+  
+  /* Conteneur des images */
+  #image-container2 .image-wrapper {
+	display: flex;
+	flex-direction: column; /* Empile la légende sous chaque image */
+	align-items: center; /* Centre les images et légendes horizontalement */
+	text-align: center; /* Centre le texte des légendes */
+	margin: 10px; /* Ajoute un espace autour de chaque image-wrapper */
+  }
+  
+  /* Style des images */
+  #image-container2 .image-wrapper img {
+	max-width: 120px; /* Limite la largeur des images */
+	height: auto; /* Conserve les proportions des images */
+	border-radius: 10px; /* Ajoute des coins arrondis */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ajoute une ombre */
+  }
+  
+  /* Style des légendes */
+  #image-container2 .image-caption {
+	margin-top: 5px;
+	font-size: 14px;
+	color: #ccc;
+  }
+  
 
   .location-buttons button.active {
     background-color: inherit; /* Couleur plus foncée pour le bouton actif */
@@ -270,4 +312,28 @@ footer p:hover {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+  }
+
+
+
+  /* Boutons dynamiques */
+  .dynamic-button {
+	padding: 10px 20px;
+	margin: 5px;
+	background-color: #17223B;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+  }
+  
+  .dynamic-button:hover {
+	background-color: #3FBADE;
+  }
+
+  .dynamic-button.active {
+	background-color: inherit; /* Couleur plus claire pour le bouton actif */
+	color: #17223B;
+	border: 2px solid #17223B; /* Ajoute une bordure pour le bouton actif */
   }
