@@ -3,21 +3,27 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Landing page Moderne et Responsive en HTML & CSS</title>
+		<title>IMTA - BDx & Assos</title>
 		<link rel="stylesheet" href="css/stylePage.css" />
 	</head>
 	<body>
 		<header>
 			<nav>
-				<h1>Headboost</h1>
+				<h1><a href="index2.html">BDE IMT Atlantique</a></h1>
 				<div class="right">
-					<p>Accueil</p>
+					<p><a href="index2.html">Accueil</a></p>
 					<p>Présentation</p>
 					<p>Contact</p>
 				</div>
 			</nav>
 
+      <br><br><br>
+      <div class="sticker-title">
+        <h1>Vie étudiante</h1>
+      </div>
+
 			<section class="presentation first">
+        
 				<div class="product-presentation">
 					<h1>Bureaux des étudiants</h1>
 					<p>
@@ -25,7 +31,7 @@
                         sur nos 2 campus ! <br> <br>
                         Clique sur le bureau de ton choix pour plus de détails.
 					</p>
-                    <div class="location-buttons">
+                    <div class="location-buttons bureaux-buttons">
                         <button onclick="showImages('nantes')">Nantes</button>
                         <button onclick="showImages('brest')">Brest</button>
                     </div>
@@ -49,7 +55,7 @@
 					<p>
 						Découvrez les assos et clubs de l'IMT Atlantique
 					</p>
-                    <div class="location-buttons">
+                    <div class="location-buttons asso-buttons">
                         <button onclick="showClub('nantesAsso')">Nantes</button>
                         <button onclick="showClub('brestAsso')">Brest</button>
                     </div>
@@ -69,280 +75,31 @@
 			</section>
 		</header>
 
-		<section class="presentation second">
-			<div class="product-presentation">
-				<p class="new">Nouveau produit disponible</p>
-				<h1>Le nouveau casque HeadBoost</h1>
-				<p>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum odio
-					eos beatae labore possimus. Pariatur ipsa, tempore optio placeat
-					expedita minus cupiditate nulla iure quis error. A vitae quibusdam
-					veniam.
-				</p>
-				<button>Voir les spécifications</button>
-			</div>
-			<div class="image-presentation">
-				<img
-					src="https://cdn.shopify.com/s/files/1/2654/0420/products/RECONSPARK_HEADSET_1_e87826ec-226a-4ce0-8782-42403e33a376_480x480.png?v=1571871155"
-				/>
-			</div>
-		</section>
+		
 
 		<footer>
-			<div class="column">
-				<h3>Aide</h3>
-				<p>contact@headboost.fr</p>
-				<p>Contactez-nous</p>
-				<p>Comment acheter</p>
-			</div>
-			<div class="column">
-				<h3>Recrutement</h3>
-				<p>business@headboost.fr</p>
-				<p>Postuler en ligne</p>
-				<p>Comment faire ?</p>
-			</div>
-			<div class="column">
-				<h3>Réseaux</h3>
-				<p>Facebook</p>
-				<p>Twitter</p>
-				<p>Instagram</p>
-			</div>
-		</footer>
-	</body>
+      <h5>Des questions ?</h5>
+      <div class="colonnes">
+        <div class="colonne">
+          <p><a href="Integration.html">Planning de l'intégration</a></p>
+          <p><a href="WEC.html">Week-end de cohésion</a></p>
+          <p><a href="WEI.html">Week-end d'intégration</a></p>
+          
+        </div>
+        <div class="colonne">
+          <p><a href="Bureaux.html">Bureaux de vie étudiante</a></p>
+          <p><a href="Bureaux.html">Assos et clubs</a></p>
+          <p><a href="Fede.html">Fédération des élèves</a></p>
+          <p>Règlements & paiements</p>
+        </div>
+        <div class="colonne">
+          <p>FAQ</p>
+          <p>Référents à contacter</p>
+          <p>Nous contacter</p>
+        </div>
+      </div>
+      <p>BDE IMT Atlantique</p>
+    </footer>
 
 
-
-    <script>
-        function showImages(location) {
-          const imageContainer = document.getElementById('image-container');
-          imageContainer.innerHTML = ''; // Vide le conteneur avant d'ajouter les nouvelles images
-
-          // Gère l'état actif des boutons
-          const buttons = document.querySelectorAll('.location-buttons button');
-          buttons.forEach(button => button.classList.remove('active')); // Retire la classe active de tous les boutons
-
-          // Ajoute la classe active au bouton cliqué
-          const activeButton = Array.from(buttons).find(button => button.textContent.toLowerCase() === location);
-          if (activeButton) activeButton.classList.add('active');
-
-        
-            let images = [];
-            if (location === 'nantes') {
-              images = [
-                {
-                  src: 'images/BDEN.png',
-                  caption: 'BDE',
-                  title: 'BDE IMTemporel',
-                  description: `
-                    <p>BDE de Nantes.</p>
-                    <h3>Bureau Restreint</h3>
-                    <h3>Pôle Intégration</h3>
-                    <h3>Pole Event</h3>
-                    <h3>Pole Com</h3>
-                    <h3>Pole Log</h3>
-                    <h3>Pole Sponso</h3>
-                    <h3>Respo projet & Tech</h3>
-                  `
-                },
-                {
-                  src: 'images/BDAN.png',
-                  caption: 'BDA',
-                  title: 'BDA Gendartmes',
-                  description: `
-                    <p>Description du BDA de Nantes.</p>
-                  `
-                },
-                {
-                  src: 'https://cdn.shopify.com/s/files/1/2654/0420/products/RECONSPARK_HEADSET_8.png?v=1571871155',
-                  caption: 'BDS',
-                  title: 'BDS Asphaltes',
-                  description: `
-                    <p>Description du BDS de Nantes.</p>
-                  `
-                }
-              ];
-            } else if (location === 'brest') {
-              images = [
-                {
-                  src: 'https://cdn.shopify.com/s/files/1/2654/0420/products/RECONSPARK_HEADSET_1_e87826ec-226a-4ce0-8782-42403e33a376_480x480.png?v=1571871155',
-                  caption: 'BDE',
-                  title: 'BDE Breizh To The Future',
-                  description: `
-                    <p>Description du BDE de Brest.</p>
-                  `
-                },
-                {
-                  src: 'https://cdn.shopify.com/s/files/1/2654/0420/products/RECONSPARK_HEADSET_4.png?v=1571871155',
-                  caption: 'BDA',
-                  title: 'BDA Pixart',
-                  description: `
-                    <p>Description du BDA de Brest.</p>
-                  `
-                },
-                {
-                  src: 'https://cdn.shopify.com/s/files/1/2654/0420/products/RECONSPARK_HEADSET_5.png?v=1571871155',
-                  caption: 'BDS',
-                  title: 'BDS Super Mario Bras',
-                  description: `
-                    <p>Description du BDS de Brest.</p>
-                  `
-                }
-              ];
-            }
-        
-            // Ajoute les images et leurs légendes au conteneur
-            images.forEach(item => {
-              const imgWrapper = document.createElement('div');
-              imgWrapper.classList.add('image-wrapper');
-        
-              const img = document.createElement('img');
-              img.src = item.src;
-              img.alt = item.caption;
-              img.onclick = () => openModal(item.title, item.description); // Ajoute un événement onclick
-        
-              const caption = document.createElement('p');
-              caption.textContent = item.caption;
-              caption.classList.add('image-caption');
-        
-              imgWrapper.appendChild(img);
-              imgWrapper.appendChild(caption);
-              imageContainer.appendChild(imgWrapper);
-            });
-        }
-      
-        // Fonction pour ouvrir la boîte modale
-        function openModal(title, description) {
-          const modal = document.getElementById('modal');
-          document.getElementById('modal-title').textContent = title;
-          document.getElementById('modal-description').innerHTML = description; // Utilisez innerHTML pour insérer du contenu HTML
-          modal.style.display = 'block';
-        }
-      
-        // Fonction pour fermer la boîte modale
-        function closeModal() {
-          const modal = document.getElementById('modal');
-          modal.style.display = 'none';
-        }
-      
-        // Ferme la boîte modale si l'utilisateur clique en dehors
-        window.onclick = function(event) {
-          const modal = document.getElementById('modal');
-          if (event.target === modal) {
-            modal.style.display = 'none';
-          }
-        };
-        
-
-        function markButtonAsActive(button) {
-          const allButtons = document.querySelectorAll('#image-container2 button');
-          allButtons.forEach(btn => btn.classList.remove('active')); // Retire la classe active de tous les boutons
-          button.classList.add('active'); // Ajoute la classe active au bouton cliqué
-        }
-
-        
-        function showClub(location) {
-          const container = document.getElementById('image-container2');
-          container.innerHTML = ''; // Vide le conteneur principal
-
-          // Crée un sous-conteneur pour les boutons
-          const buttonContainer = document.createElement('div');
-          buttonContainer.classList.add('dynamic-buttons'); // Ajoute une classe pour le style
-
-          let buttonsData = [];
-          if (location === 'nantesAsso') {
-            buttonsData = [
-              { id: 'ClubsBDEN', text: 'Clubs BDE' },
-              { id: 'ClubsBDAN', text: 'Clubs BDA' }
-            ];
-          } else if (location === 'brestAsso') {
-            buttonsData = [
-              { id: 'ClubsBDEB', text: 'Clubs BDE' },
-              { id: 'ClubsBDAB', text: 'Clubs BDA' }
-            ];
-          }
-
-          // Ajoute les boutons dynamiquement
-          buttonsData.forEach(button => {
-            const btn = document.createElement('button');
-            btn.id = button.id;
-            btn.textContent = button.text;
-            btn.onclick = () => {
-              showClubImages(button.id);
-              markButtonAsActive(btn); // Marque le bouton comme actif
-            };
-            btn.classList.add('dynamic-button'); // Ajoute une classe pour le style
-            buttonContainer.appendChild(btn);
-          });
-
-          // Ajoute le conteneur des boutons au conteneur principal
-          container.appendChild(buttonContainer);
-
-          // Crée un sous-conteneur pour les images
-          const imageContainer = document.createElement('div');
-          imageContainer.classList.add('image-container'); // Ajoute une classe pour le style
-          container.appendChild(imageContainer);
-        }
-
-        function showClubImages(buttonId) {
-          const container = document.querySelector('#image-container2 .image-container');
-
-          // Supprime uniquement les images existantes
-          container.innerHTML = '';
-
-          let images = [];
-          if (buttonId === 'ClubsBDEN') {
-            images = [
-              { src: 'images/club1.png', caption: 'SpaceCraft' },
-              { src: 'images/club2.png', caption: 'PlugIMT' },
-              { src: 'images/club2.png', caption: 'Zythologie' }
-            ];
-          } else if (buttonId === 'ClubsBDAN') {
-            images = [
-              { src: 'images/club3.png', caption: 'Club 3 Nantes' },
-              { src: 'images/club4.png', caption: 'Club 4 Nantes' }
-            ];
-          } else if (buttonId === 'ClubsBDEB') {
-            images = [
-              { src: 'images/club1.png', caption: 'SpaceCraft' },
-              { src: 'images/club2.png', caption: 'PlugIMT' },
-              { src: 'images/club2.png', caption: 'Zythologie' }
-            ];
-          } else if (buttonId === 'ClubsBDAB') {
-            images = [
-              { src: 'images/club3.png', caption: 'Club 3 Nantes' },
-              { src: 'images/club4.png', caption: 'Club 4 Nantes' }
-            ];
-          }
-
-          // Ajoute les images et leurs légendes au conteneur
-          const imageRow = document.createElement('div');
-          imageRow.style.display = 'flex'; // Aligne les images horizontalement
-          imageRow.style.justifyContent = 'center'; // Centre les images
-          imageRow.style.gap = '20px'; // Ajoute un espace entre les images
-
-          images.forEach(item => {
-            const imgWrapper = document.createElement('div');
-            imgWrapper.classList.add('image-wrapper');
-            imgWrapper.style.textAlign = 'center'; // Centre la légende sous l'image
-
-            const img = document.createElement('img');
-            img.src = item.src;
-            img.alt = item.caption;
-            img.style.maxWidth = '120px'; // Limite la largeur des images
-            img.style.borderRadius = '10px'; // Ajoute des coins arrondis
-
-            const caption = document.createElement('p');
-            caption.textContent = item.caption;
-            caption.classList.add('image-caption');
-            caption.style.marginTop = '5px'; // Ajoute un espace entre l'image et la légende
-
-            imgWrapper.appendChild(img);
-            imgWrapper.appendChild(caption);
-            imageRow.appendChild(imgWrapper);
-          });
-
-          container.appendChild(imageRow);
-        }
-
-
-      </script>
+  <script src="js/script.js"></script>

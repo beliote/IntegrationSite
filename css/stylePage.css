@@ -26,6 +26,7 @@ header nav h1 {
 	text-transform: uppercase;
 	color: var(--violet);
 }
+
 header nav .right {
 	display: flex;
 	align-items: center;
@@ -52,6 +53,14 @@ header nav .right button:hover {
 	color: inherit;
 	background-color: var(--violet);
 }
+/* Style des liens dans le pied de page */
+header nav a {
+	text-decoration: none; /* Supprime le soulignement */
+	color: inherit; /* Utilise la couleur du texte environnant */
+}
+header nav a:visited {
+	color: inherit; /* Empêche la couleur violette pour les liens visités */
+}
 
 .presentation {
 	padding: 30px 5%;
@@ -70,7 +79,8 @@ header nav .right button:hover {
 	width: 80%;
 }
 .presentation .product-presentation p {
-	font-weight: 300;
+	font-weight: 500;
+  font-size: 1vw;
 	color: #e9e9e9;
 }
 .presentation .product-presentation button {
@@ -134,24 +144,26 @@ header nav .right button:hover {
 	color: white;
 }
 
-footer {
-	margin: 0;
-	padding: 20px;
-	background-color: black;
+/* Pied de page */
+footer{
+	background-color: #17223B;
+	padding: 25px 100px;
+	color:#828282;
+  }
+  footer .colonnes{
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
-}
-footer h3 {
-	color: var(--violet);
-}
-footer p {
-	cursor: pointer;
-	color: #ccc;
-}
-footer p:hover {
-	color: white;
-}
+	justify-content: space-between;
+  }
+  /* Style des liens dans le pied de page */
+  footer a {
+	text-decoration: none; /* Supprime le soulignement */
+	color: inherit; /* Utilise la couleur du texte environnant */
+  }
+  footer a:visited {
+	color: inherit; /* Empêche la couleur violette pour les liens visités */
+  }
+  /* Fin du pied de page */
 
 @media screen and (max-width: 640px) {
 	nav .right p {
@@ -161,6 +173,11 @@ footer p:hover {
 	.presentation .product-presentation h1 {
 		font-size: 2em;
 	}
+
+  .presentation .product-presentation p {
+		font-size: 1em;
+	}
+
 	.presentation .image-presentation {
 		display: none;
 	}
@@ -168,12 +185,7 @@ footer p:hover {
 		width: 90px;
 	}
 
-	footer {
-		justify-content: flex-start;
-	}
-	footer .column {
-		width: 80%;
-	}
+	
 }
 
 
@@ -259,7 +271,7 @@ footer p:hover {
   #image-container2 .image-caption {
 	margin-top: 5px;
 	font-size: 14px;
-	color: #ccc;
+	color: #ffffff;
   }
   
 
@@ -332,8 +344,190 @@ footer p:hover {
 	background-color: #3FBADE;
   }
 
-  .dynamic-button.active {
+  .dynamic-buttons button.active {
 	background-color: inherit; /* Couleur plus claire pour le bouton actif */
 	color: #17223B;
 	border: 2px solid #17223B; /* Ajoute une bordure pour le bouton actif */
   }
+
+
+
+
+
+  .sticker-title {
+    position: relative;
+    background-color: inherit; /* Couleur de fond du sticker */
+    color: #17223B; /* Couleur du texte */
+    font-size: 3em; /* Taille du texte */
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 40px; /* Espacement interne */
+    margin: 20px auto; /* Espacement externe */
+    width: fit-content; /* Ajuste la largeur au contenu */
+    transform: rotate(0deg); /* Inclinaison du sticker */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour l'effet de sticker */
+    border-radius: 10px; /* Coins arrondis */
+    border: 3px solid #17223B; /* Bordure pour un effet de sticker */
+}
+
+.sticker-title h1 {
+    margin: 0; /* Supprime les marges par défaut */
+    font-family: 'Montserrat', sans-serif; /* Police utilisée dans le reste de la page */
+}
+
+@media screen and (max-width: 640px) {
+    .sticker-title {
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 1.6em; /* Réduit la taille du texte sur mobile */
+        padding: 10px 10px; /* Ajuste l'espacement interne */
+        transform: rotate(0deg); /* Réduit l'inclinaison sur mobile */
+    }
+}
+
+
+
+
+/* INTEGRATIONS 2025 */
+
+
+.integration-buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: var(--violet);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.integration-buttons button:hover {
+    background-color: #3FBADE;
+}
+
+.integration-buttons button.active {
+    background-color: inherit;
+    color: #17223B;
+    border: 2px solid #17223B;
+}
+
+
+
+
+
+.buttons {
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .buttons button.active {
+    background-color: inherit;
+    color: #17223B;
+    border: 2px solid #17223B;    }
+
+	#calendar-container {
+		max-width: 90vw;
+		margin: 0 auto;
+		overflow-x: auto;
+		padding: 1rem;
+	  }
+	  
+	  #calendar-table {
+		border-collapse: separate;
+		border-spacing: 0;
+		width: 100%;
+		border: 4px solid #343a40; /* Couleur et épaisseur du contour */
+		border-radius: 16px; /* Coins arrondis */
+		overflow: hidden;
+		background-color: white;
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	  }
+	  
+	  #calendar-table th,
+	  #calendar-table td {
+		border: 1px solid #dee2e6;
+		padding: 12px;
+		text-align: center;
+	  }
+	  
+	  #calendar-table th:first-child {
+		border-top-left-radius: 12px;
+	  }
+	  
+	  #calendar-table th:last-child {
+		border-top-right-radius: 12px;
+	  }
+	  
+	  #calendar-table tr:last-child td:first-child {
+		border-bottom-left-radius: 12px;
+	  }
+	  
+	  #calendar-table tr:last-child td:last-child {
+		border-bottom-right-radius: 12px;
+	  }
+	  
+	  .event {
+		margin: 5px 0;
+		padding: 6px 10px;
+		border-radius: 8px;
+		color: white;
+		font-weight: 500;
+	  }
+
+
+
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #17223B;
+  color: white;
+}
+
+th {
+  border: 2px solid #ccc;
+  border-color: #17223B;
+  padding: 10px;
+  color : white;
+  text-align: center;
+  min-width: 100px;
+}
+
+td {
+  border: 2px solid #ccc;
+  border-color: #17223B;
+  padding: 10px;
+  color : #17223B;
+  text-align: center;
+  min-width: 100px;
+}	
+
+/* Responsive */
+@media (max-width: 768px) {
+  th, td {
+    padding: 6px;
+    font-size: 0.9rem;
+    min-width: 80px;
+  }
+}
+
+
+
+
