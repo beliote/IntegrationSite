@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emploi du Temps - Intégration 2025</title>
+  <link rel="stylesheet" href="css/stylePage.css" />
+  <!-- Ajout du CSS de FullCalendar -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" />
+  <style>
+    /* Styles généraux et sélecteur de campus */
+    .campus-selector {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .campus-selector button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .campus-selector button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Style des cartes journalières */
+    .day-card {
+      background-color: #ffffff;
+      border: 2px solid #17223B;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 10px;
+      text-align: center;
+    }
+    .day-title {
+      background-color: #17223B;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    /* Nouvelle structure pour les événements */
+    .event {
+      background-color: #007BFF;
+      color: white;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .event-color-orga {
+      background-color: #C49D83; /* Bleu */
+      color: white;
+    }
+
+    .event-color-act {
+      background-color: #B384A7; /* Rouge */
+      color: white;
+    }
+
+    .event-color-eat {
+      background-color: #E3CD8B; /* Rouge */
+      color: white;
+    }
+
+    .event-color-night {
+      background-color: #e76f51; /* Rouge */
+      color: white;
+    }
+
+    .event-time {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .event-text {
+      /* Vous pouvez ajouter d'autres styles ici si nécessaire */
+    }
+
+    /* Version Desktop: affichage des 7 jours côte à côte */
+    .desktop-schedule-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    /* Pour desktop, on force la même largeur pour toutes les day cards */
+    @media (min-width: 768px) {
+      .desktop-schedule-container .day-card {
+        width: 150px; /* Ajustez la largeur selon le rendu souhaité */
+      }
+    }
+
+    /* Version Mobile: un seul jour affiché avec navigation */
+    .mobile-schedule-container {
+      position: relative;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .mobile-schedule-container .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #17223B;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .mobile-schedule-container .prev-btn {
+      left: -50px;
+    }
+    .mobile-schedule-container .next-btn {
+      right: -50px;
+    }
+
+    /* Affichage par défaut : version mobile en petit écran et desktop en grand écran */
+    .desktop-schedule-container { display: none; }
+    .mobile-schedule-container { display: block; }
+    @media (min-width: 768px) {
+      .desktop-schedule-container { display: flex; }
+      .mobile-schedule-container { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1><a href="index2.html">BDE IMT Atlantique</a></h1>
+      <div class="right">
+        <p><a href="index2.html">Accueil</a></p>
+        <p>Présentation</p>
+        <p>Contact</p>
+      </div>
+    </nav>
+    <br><br><br>
+    <div class="sticker-title">
+      <h1>Intégration 2025</h1>
+    </div>
+    <section class="presentation first">
+      <div class="product-presentation">
+
+        <h1>Planning par campus</h1>
+        <h2>Ajouter le planning à mon agenda : Lien</h2>
+        <p> Sélectionnez votre campus pour afficher le planning correspondant </p>
+
+        <br><br>
+
+        <h1>Semaine 1 - Découverte</h1>
+        <!-- Sélecteur de campus -->
+        <div class="campus-selector">
+          <button onclick="selectCampus1('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest')">Brest</button>
+        </div>
+        <!-- Version Desktop : Affichage des 7 jours côte à côte -->
+        <div class="desktop-schedule-container" id="desktopSchedule">
+          <!-- Jeudi -->
+          <div class="day-card">
+            <div class="day-title">Thu 21/08</div>
+            <div class="event event-color-orga">
+              <div class="event-time">10:00 - 18:00</div>
+              <div class="event-text">Acceuil des étudiants</div>
+            </div>
+            <div class="event event-color-eat">
+              <div class="event-time">19:00 - 22:00</div>
+              <div class="event-text">Barbecue</div>
+            </div>
+          </div>
+          <!-- Vendredi -->
+          <div class="day-card">
+            <div class="day-title">Fri 22/08</div>
+            <div class="event event-color-orga">
+              <div class="event-time">10:00 - 18:00</div>
+              <div class="event-text">Acceuil des étudiants</div>
+            </div>
+            <div class="event event-color-eat">
+              <div class="event-time">19:00 - 22:00</div>
+              <div class="event-text">Apéro des régions</div>
+            </div>
+          </div>
+          <!-- Samedi -->
+          <div class="day-card">
+            <div class="day-title">Sat 23/08</div>
+            <div class="event event-color-eat">
+              <div class="event-time">11:00 - 13:00</div>
+              <div class="event-text">Brunch BDE</div>
+            </div>
+            <div class="event event-color-act">
+              <div class="event-time">19:00 - 22:00</div>
+              <div class="event-text">Rallye des bâtiments</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">22:00 - 04:00</div>
+              <div class="event-text">Soirée ABC</div>
+            </div>
+          </div>
+          <!-- Dimanche -->
+          <div class="day-card">
+            <div class="day-title">Sun 24/08</div>
+            <div class="event event-color-eat">
+              <div class="event-time">11:00 - 13:00</div>
+              <div class="event-text">Brunch BDD</div>
+            </div>
+            <div class="event event-color-act">
+              <div class="event-time">14:00 - 19:00</div>
+              <div class="event-text">Rallye Nantais</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">22:00 - 04:00</div>
+              <div class="event-text">Tonus BDE</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Version Mobile : Un seul jour affiché avec boutons de navigation -->
+        <div class="mobile-schedule-container" id="mobileSchedule">
+          <!-- Boutons de navigation -->
+          <button class="nav-btn prev-btn" onclick="prevDay1()">&#9664;</button>
+          <div id="mobileDayCard1">
+            <!-- Le contenu du jour sera injecté ici via JS -->
+          </div>
+          <button class="nav-btn next-btn" onclick="nextDay1()">&#9654;</button>
+        </div>
+
+
+        <br><br>
+
+        <h1>Semaine 2 - Adaptation</h1>
+        <!-- Sélecteur de campus -->
+        <div class="campus-selector">
+          <button onclick="selectCampus1('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest')">Brest</button>
+        </div>
+
+        <div class="desktop-schedule-container" id="desktopSchedule">
+          <div class="day-card">
+            <div class="day-title">Mon 25/08</div>
+            <div class="event event-color-eat">
+              <div class="event-time">11:00 à 13:00</div>
+              <div class="event-text">Brunch BDA</div>
+            </div>
+            <div class="event event-color-act">
+              <div class="event-time">15:00 à 19:00</div>
+              <div class="event-text">Inte Contest</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 23:00</div>
+              <div class="event-text">Cohésion des petites classes</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">23:00 à 03:00</div>
+              <div class="event-text">Soirée BDE</div>
+            </div>
+          </div>
+          
+          <div class="day-card">
+            <div class="day-title">Tue 26/08</div>
+            <div class="event event-color-eat">
+              <div class="event-time">11:00 à 13:00</div>
+              <div class="event-text">Brunch BDS</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 01:00</div>
+              <div class="event-text">Soirée BDS</div>
+            </div>
+          </div>
+          
+          <div class="day-card">
+            <div class="day-title">Wed 27/08</div>
+            <div class="event event-color-orga">
+              <div class="event-time">12:30</div>
+              <div class="event-text">Rentrée FISE A1</div>
+            </div>
+            <div class="event event-color-act">
+              <div class="event-time">16:30 à 18:00</div>
+              <div class="event-text">Afterwork Olimpte</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">18:30 à 01:00</div>
+              <div class="event-text">Spatulas + Oenologie</div>
+            </div>
+          </div>
+          
+          <div class="day-card">
+            <div class="day-title">Thu 28/08</div>
+            <div class="event event-color-act">
+              <div class="event-time">16:00 à 18:00</div>
+              <div class="event-text">Afterwork Kulturap</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 04:00</div>
+              <div class="event-text">Tonus BDE x Dest'IMT</div>
+            </div>
+          </div>
+          
+          <div class="day-card">
+            <div class="day-title">Fri 29/08</div>
+            <div class="event event-color-act">
+              <div class="event-time">16:00 à 18:00</div>
+              <div class="event-text">Présentation des clubs BDE</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 01:00</div>
+              <div class="event-text">Soirée BDA</div>
+            </div>
+          </div>
+          
+          <div class="day-card">
+            <div class="day-title">Sat 30/08 & Sun 31/08</div>
+            <div class="event">
+              <div class="event-time">WE</div>
+              <div class="event-text">Week-end de cohésion</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version Mobile : Un seul jour affiché avec boutons de navigation -->
+        <div class="mobile-schedule-container" id="mobileSchedule">
+          <!-- Boutons de navigation -->
+          <button class="nav-btn prev-btn" onclick="prevDay2()">&#9664;</button>
+          <div id="mobileDayCard2">
+            <!-- Le contenu du jour sera injecté ici via JS -->
+          </div>
+          <button class="nav-btn next-btn" onclick="nextDay2()">&#9654;</button>
+        </div>
+
+
+        <br><br>
+
+        <h1>Semaine 3 - Cohésion</h1>
+        <!-- Sélecteur de campus -->
+        <div class="campus-selector">
+          <button onclick="selectCampus3('nantes')">Nantes</button>
+          <button onclick="selectCampus3('brest')">Brest</button>
+        </div>
+
+
+        <div class="desktop-schedule-container" id="desktopSchedule">
+          <div class="day-card">
+            <div class="day-title">Mon 01/09</div>
+            <div class="event event-color-act">
+              <div class="event-time">16:30 à 18:00</div>
+              <div class="event-text">Afterwork Junior Atlantique</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">18:30 à 01:00</div>
+              <div class="event-text">Kebabas + Zythologie</div>
+            </div>
+          </div>
+        
+          <div class="day-card">
+            <div class="day-title">Tue 02/09</div>
+            <div class="event event-color-orga">
+              <div class="event-time">08:30</div>
+              <div class="event-text">Rentrée Alternants</div>
+            </div>
+            <div class="event event-color-act">
+              <div class="event-time">16:30 à 18:00</div>
+              <div class="event-text">Afterwork ASF</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 01:00</div>
+              <div class="event-text">Tonus BDI</div>
+            </div>
+          </div>
+        
+          <div class="day-card">
+            <div class="day-title">Wed 03/09</div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 01:00</div>
+              <div class="event-text">Cabaret BDA</div>
+            </div>
+          </div>
+        
+          <div class="day-card">
+            <div class="day-title">Thu 04/09</div>
+            <div class="event event-color-act">
+              <div class="event-time">16:00 à 18:00</div>
+              <div class="event-text">Présentation des clubs BDA</div>
+            </div>
+            <div class="event event-color-night">
+              <div class="event-time">21:00 à 01:00</div>
+              <div class="event-text">Nuit du volley</div>
+            </div>
+          </div>
+        
+          <div class="day-card">
+            <div class="day-title">Fri 05/09 - Sun 07/09</div>
+            <div class="event">
+              <div class="event-time">WE</div>
+              <div class="event-text">Week-end d'intégration</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version Mobile : Un seul jour affiché avec boutons de navigation -->
+        <div class="mobile-schedule-container" id="mobileSchedule">
+          <!-- Boutons de navigation -->
+          <button class="nav-btn prev-btn" onclick="prevDay3()">&#9664;</button>
+          <div id="mobileDayCard3">
+            <!-- Le contenu du jour sera injecté ici via JS -->
+          </div>
+          <button class="nav-btn next-btn" onclick="nextDay3()">&#9654;</button>
+        </div>
+
+
+
+      </div>
+    </section>
+  </header>
+
+  <footer>
+    <h5>Des questions ?</h5>
+    <div class="colonnes">
+      <div class="colonne">
+        <p><a href="Integration.html">Planning de l'intégration</a></p>
+        <p><a href="WEC.html">Week-end de cohésion</a></p>
+        <p><a href="WEI.html">Week-end d'intégration</a></p>
+      </div>
+      <div class="colonne">
+        <p><a href="Bureaux.html">Bureaux de vie étudiante</a></p>
+        <p><a href="Bureaux.html">Assos et clubs</a></p>
+        <p><a href="Fede.html">Fédération des élèves</a></p>
+        <p>Règlements & paiements</p>
+      </div>
+      <div class="colonne">
+        <p>FAQ</p>
+        <p>Référents à contacter</p>
+        <p>Nous contacter</p>
+      </div>
+    </div>
+    <p>BDE IMT Atlantique</p>
+  </footer>
+
+  <script>
+    // Données de démonstration pour chaque jour
+    const NantesData1 = [
+      {
+        title: "Thu 21/08",
+        events: [
+          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Acceuil des étudiants" },
+          {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Barbecue" }
+        ]
+      },
+      {
+        title: "Fri 22/08",
+        events: [
+          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Acceuil des étudiants" },
+          {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Apéro des régions" }
+        ]
+      },
+      {
+        title: "Sat 23/08",
+        events: [
+          {eventType: "event-color-eat", time: "11:00 - 13:00", text: "Brunch BDE" },
+          {eventType: "event-color-act", time: "19:00 - 22:00", text: "Rallye des bâtiments" },
+          {eventType: "event-color-night", time: "22:00 - 04:00", text: "Soirée ABC" }
+        ]
+      },
+      {
+        title: "Sun 24/08",
+        events: [
+          {eventType: "event-color-eat",  time: "11:00 - 13:00", text: "Brunch BDD" },
+          {eventType: "event-color-act", time: "14:00 - 19:00", text: "Rallye Nantais" },
+          {eventType: "event-color-night", time: "22:00 - 04:00", text: "Tonus BDE" }
+        ]
+      }
+    ];
+    
+    const NantesData2 = [
+      {
+        title : "Mon 25/08",
+        events: [
+          {eventType: "event-color-eat", time: "11:00 à 13:00", text: "Brunch BDA" },
+          {eventType: "event-color-act", time: "15:00 à 19:00", text: "Inte Contest" },
+          {eventType: "event-color-night", time: "21:00 à 23:00", text: "Cohésion des petites classes" },
+          {eventType: "event-color-night", time: "23:00 à 03:00", text: "Soirée BDE" }
+        ]
+      },
+      {
+        title : "Tue 26/08",
+        events: [
+          {eventType: "event-color-eat", time: "11:00 à 13:00", text: "Brunch BDS" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Soirée BDS" }
+        ]
+      },
+      {
+        title : "Wed 27/08",
+        events: [
+          {eventType: "event-color-orga", time: "12:30", text: "Rentrée FISE A1" },
+          {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork Olimpte" },
+          {eventType: "event-color-night", time: "18:30 à 01:00", text: "Spatulas + Oenologie" }
+        ]
+      },
+      {
+        title : "Thu 28/08",
+        events: [
+          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Afterwork Kulturap" },
+          {eventType: "event-color-night", time: "21:00 à 04:00", text: "Tonus BDE x Dest'IMT" }
+        ]
+      },
+      {
+        title : "Fri 29/08",
+        events: [
+          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Présentation des clubs BDE" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Soirée BDA" }
+        ]
+      },
+      {
+        title : "Sat 30/08 & Sun 31/08",
+        events: [
+          { time: "WE", text: "Week-end de cohésion" }
+        ]
+      }
+    ];
+
+
+    const NantesData3 = [
+      {
+        title: "Mon 01/09",
+        events: [
+          {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork Junior Atlantique" },
+          {eventType: "event-color-night", time: "18:30 à 01:00", text: "Kebabas + Zythologie" }
+        ]
+      },
+      {
+        title: "Tue 02/09",
+        events: [
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée Alternants" },
+          {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork ASF" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Tonus BDI" }
+        ]
+      },
+      {
+        title: "Wed 03/09",
+        events: [
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Cabaret BDA" }
+        ]
+      },
+      {
+        title: "Thu 04/09",
+        events: [
+          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Présentation des clubs BDA" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Nuit du volley" }
+        ]
+      },
+      {
+        title: "Fri 05/09 - Sun 07/09",
+        events: [
+          { time: "WE", text: "Week-end d'intégration" }
+        ]
+      }
+    ];
+
+    
+
+    let currentDay1Index = 0;
+    let currentDay2Index = 0;
+    let currentDay3Index = 0;
+    
+    // Fonction pour afficher un jour dans la version mobile 1
+    function renderMobileDay1() {
+      const container = document.getElementById("mobileDayCard1");
+      const day = NantesData1[currentDay1Index];
+      let html = `<div class="day-card">
+                    <div class="day-title">${day.title}</div>`;
+      day.events.forEach(ev => {
+        html += `<div class="event ${ev.eventType}">
+                   <div class="event-time">${ev.time}</div>
+                   <div class="event-text">${ev.text}</div>
+                 </div>`;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher un jour dans la version mobile 2
+    function renderMobileDay2() {
+      const container = document.getElementById("mobileDayCard2");
+      const day = NantesData2[currentDay2Index];
+      let html = `<div class="day-card">
+                    <div class="day-title">${day.title}</div>`;
+      day.events.forEach(ev => {
+        html += `<div class="event ${ev.eventType}">
+                   <div class="event-time">${ev.time}</div>
+                   <div class="event-text">${ev.text}</div>
+                 </div>`;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher un jour dans la version mobile 2
+    function renderMobileDay3() {
+      const container = document.getElementById("mobileDayCard3");
+      const day = NantesData3[currentDay3Index];
+      let html = `<div class="day-card">
+                    <div class="day-title">${day.title}</div>`;
+      day.events.forEach(ev => {
+        html += `<div class="event ${ev.eventType}">
+                   <div class="event-time">${ev.time}</div>
+                   <div class="event-text">${ev.text}</div>
+                 </div>`;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+
+    
+    // Initialisation
+    renderMobileDay1();
+    renderMobileDay2();
+    renderMobileDay3();
+    
+    function prevDay1() {
+      currentDay1Index = (currentDay1Index === 0) ? NantesData1.length - 1 : currentDay1Index - 1;
+      renderMobileDay1();
+    }
+    
+    function nextDay1() {
+      currentDay1Index = (currentDay1Index === NantesData1.length - 1) ? 0 : currentDay1Index + 1;
+      renderMobileDay1();
+    }
+
+    function prevDay2() {
+      currentDay2Index = (currentDay2Index === 0) ? NantesData2.length - 1 : currentDay2Index - 1;
+      renderMobileDay2();
+    }
+    
+    function nextDay2() {
+      currentDay2Index = (currentDay2Index === NantesData2.length - 1) ? 0 : currentDay2Index + 1;
+      renderMobileDay2();
+    }
+
+    function prevDay3() {
+      currentDay3Index = (currentDay3Index === 0) ? NantesData3.length - 1 : currentDay3Index - 1;
+      renderMobileDay3();
+    }
+    
+    function nextDay3() {
+      currentDay3Index = (currentDay3Index === NantesData3.length - 1) ? 0 : currentDay3Index + 1;
+      renderMobileDay3();
+    }
+    
+    // Exemple de fonction pour la sélection de campus
+    function selectCampus(campus) {
+      console.log("Campus sélectionné :", campus);
+      // Ajoutez ici la logique pour filtrer ou recharger les événements selon le campus choisi
+    }
+  </script>
+</body>
+</html>
