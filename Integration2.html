@@ -1,0 +1,110 @@
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>IMTA - Inte 2025</title>
+		<link rel="stylesheet" href="css/stylePage.css" />
+    <!-- Ajout du CSS de FullCalendar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" />
+	</head>
+	<body>
+		<header>
+			<nav>
+				<h1><a href="index2.html">BDE IMT Atlantique</a></h1>
+				<div class="right">
+					<p><a href="index2.html">Accueil</a></p>
+					<p>Présentation</p>
+					<p>Contact</p>
+				</div>
+			</nav>
+
+      <br><br><br>
+      <div class="sticker-title">
+        <h1>Intégration 2025</h1>
+      </div>
+
+			<section class="presentation first">
+        <div class="product-presentation">
+            <h1>Planning par campus</h1>
+            <h2>Ajouter le planning à mon agenda : Lien</h2>
+            <p>
+                Sélectionnez votre campus pour afficher le planning correspondant.
+            </p>
+
+            <br><br>
+
+            <h1>Semaine 1 - Découverte</h1>
+            <div class="buttons">
+              <button id="N1" onclick="showSchedule('nantes1')">Nantes</button>
+              <button id="N2" onclick="showSchedule('brest1')">Brest</button>
+              <!-- Le bouton "Fermer" est caché au départ -->
+              &nbsp;&nbsp;&nbsp;
+              <button id="closeButton" onclick="closeSchedule('schedule1')" style="display: none;">Fermer</button>
+            </div>
+            
+            <main id="schedule1"></main>
+            
+            <br><br>
+            
+            <h1>Semaine 2 - Adaptation</h1>
+            <div class="buttons">
+              <button onclick="showSchedule('nantes2')">Nantes</button>
+              <button onclick="showSchedule('brest2')">Brest</button>
+              <!-- Le bouton "Fermer" est caché au départ -->
+              <button id="closeButton2" onclick="closeSchedule('schedule2')" style="display: none;">Fermer</button>
+            </div>
+            
+            <main id="schedule2"></main>
+
+            <br><br>
+            
+            <h1>Semaine 3 - Cohésion</h1>
+            <div class="buttons">
+              <button onclick="showSchedule('nantes3')">Nantes</button>
+              <button onclick="showSchedule('brest3')">Brest</button>
+              <!-- Le bouton "Fermer" est caché au départ -->
+              <button id="closeButton3" onclick="closeSchedule('schedule3')" style="display: none;">Fermer</button>
+            </div>
+            
+            <main id="schedule3"></main>
+
+
+              
+
+        </div>
+    </section>
+      
+		</header>
+
+		 <!-- Pied de page -->
+     <footer>
+      <h5>Des questions ?</h5>
+      <div class="colonnes">
+        <div class="colonne">
+          <p><a href="Integration.html">Planning de l'intégration</a></p>
+          <p><a href="WEC.html">Week-end de cohésion</a></p>
+          <p><a href="WEI.html">Week-end d'intégration</a></p>
+          
+        </div>
+        <div class="colonne">
+          <p><a href="Bureaux.html">Bureaux de vie étudiante</a></p>
+          <p><a href="Bureaux.html">Assos et clubs</a></p>
+          <p><a href="Fede.html">Fédération des élèves</a></p>
+          <p>Règlements & paiements</p>
+        </div>
+        <div class="colonne">
+          <p>FAQ</p>
+          <p>Référents à contacter</p>
+          <p>Nous contacter</p>
+        </div>
+      </div>
+      <p>BDE IMT Atlantique</p>
+    </footer>
+
+    <!-- Chargement de FullCalendar et du Google Calendar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.8/index.global.min.js"></script>
+    <script src="js/script.js"></script>
+	</body>
+</html>
