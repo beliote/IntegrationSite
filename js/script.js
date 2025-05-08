@@ -16,7 +16,7 @@ function showImages(location) {
 	  if (location === 'nantes') {
 		images = [
 		  {
-			src: 'images/BDEN.png',
+			src: '../images/BDEN.png',
 			caption: 'BDE',
 			title: 'BDE IMTemporel',
 			description: `
@@ -31,7 +31,7 @@ function showImages(location) {
 			`
 		  },
 		  {
-			src: 'images/BDAN.png',
+			src: '../images/BDAN.png',
 			caption: 'BDA',
 			title: 'BDA Gendartmes',
 			description: `
@@ -129,6 +129,80 @@ function showImages(location) {
 		imageContainer.appendChild(imgWrapper);
 	  });
   }
+
+
+
+  function showVSS(location) {
+	const imageContainer = document.getElementById('image-container');
+	imageContainer.innerHTML = ''; // Vide le conteneur avant d'ajouter les nouvelles images
+  
+	// Gère l'état actif des boutons de la section "Bureaux des étudiants"
+	const buttons = document.querySelectorAll('.bureaux-buttons button');
+	buttons.forEach(button => button.classList.remove('active')); // Retire la classe active de tous les boutons
+  
+	// Ajoute la classe active au bouton cliqué
+	const activeButton = Array.from(buttons).find(button => button.getAttribute('onclick').includes(location));
+	if (activeButton) activeButton.classList.add('active');
+  
+	// Données des personnes à afficher
+	let people = [];
+	if (location === 'nantes') {
+	  people = [
+		{ src: 'images/person1.png', name: 'Jeanne Euzebio', phone: '07 68 22 25 10' },
+		{ src: 'images/person2.png', name: 'Célian Tissier', phone: '07 88 73 45 23' },
+		{ src: 'images/person3.png', name: 'Maxime Arbez', phone: '07 87 19 83 95' },
+		{ src: 'images/person4.png', name: 'Zoe Loiseau', phone: '07 82 91 92 63' }
+	  ];
+	} else if (location === 'brest') {
+	  people = [
+		{ src: 'images/person5.png', name: 'Nélia Fedele', phone: '06 32 00 41 56' },
+		{ src: 'images/person6.png', name: 'Tristan D\'Herve', phone: '06 17 75 04 17' },
+		{ src: 'images/person7.png', name: 'Barthélemy Loret', phone: '06 95 29 02 86' },
+		{ src: 'images/person8.png', name: 'Tiphaine Schrenck', phone: '07 67 62 91 28' }
+	  ];
+	}
+  
+	// Ajoute les images et leurs légendes au conteneur
+	people.forEach(person => {
+	  const imgWrapper = document.createElement('div');
+	  imgWrapper.classList.add('image-wrapper');
+	  imgWrapper.style.textAlign = 'center'; // Centre la légende sous l'image
+	  imgWrapper.style.margin = '10px'; // Ajoute un espace autour de chaque image
+	  imgWrapper.style.width = '142px'; // Fixe une largeur uniforme pour les conteneurs
+	  imgWrapper.style.height = '250px'; // Fixe une hauteur uniforme pour les conteneurs
+	  imgWrapper.style.display = 'inline-block'; // Aligne les conteneurs horizontalement
+	  
+  
+	  const img = document.createElement('img');
+	  img.src = person.src;
+	  img.alt = person.name;
+	  img.style.maxWidth = '150px'; // Limite la largeur des images
+	  img.style.borderRadius = '10px'; // Ajoute des coins arrondis
+  
+	  const name = document.createElement('p');
+	  name.textContent = person.name;
+	  name.style.fontWeight = 'bold'; // Met le nom en gras
+	  name.style.marginBottom = '5px'; // Réduit l'espace sous le nom
+	  name.style.fontSize = '15px'; 
+  
+	  const phone = document.createElement('p');
+	  phone.textContent = person.phone;
+	  phone.style.marginTop = '0'; // Supprime l'espace au-dessus du numéro
+	  phone.style.fontSize = '15px';
+
+  
+	  imgWrapper.appendChild(img);
+	  imgWrapper.appendChild(name);
+	  imgWrapper.appendChild(phone);
+	  imageContainer.appendChild(imgWrapper);
+	});
+  }
+
+
+
+
+
+
 
   // Fonction pour ouvrir la boîte modale
   function openModal(title, description) {

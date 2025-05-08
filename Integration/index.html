@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emploi du Temps - Intégration 2025</title>
-  <link rel="stylesheet" href="css/stylePage.css" />
+  <link rel="stylesheet" href="../css/stylePage.css" />
   <!-- Ajout du CSS de FullCalendar -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" />
   <style>
@@ -134,12 +134,29 @@
 <body>
   <header>
     <nav>
-      <h1><a href="index2.html">BDE IMT Atlantique</a></h1>
+      <h1><a href="../">BDE IMT Atlantique</a></h1>
       <div class="right">
-        <p><a href="index2.html">Accueil</a></p>
-        <p>Présentation</p>
-        <p>Contact</p>
-      </div>
+                  <p><a href="../">Accueil</a></p>
+                  <div class="dropdown">
+                    <p>Intégration</p>
+                    <div class="dropdown-content">
+                      <a href="../Integration">Planning</a>
+                      <a href="../WEI">WEI</a>
+                      <a href="../WEC">WEC</a>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p>Vie Asso</p>
+                    <div class="dropdown-content">
+                      <a href="../Fede">Mot de la Fédé</a>
+                      <a href="../Bureaux">Bureaux des élèves</a>
+                      <a href="../Bureaux">Assos & Clubs</a>
+                      <a href="../VSS">VSS</a>
+                    </div>
+                  </div>
+                  <p><a href="../">Nous contacter</a></p>
+              
+                </div>
     </nav>
     <br><br><br>
     <div class="sticker-title">
@@ -149,7 +166,10 @@
       <div class="product-presentation">
 
         <h1>Planning par campus</h1>
-        <h2>Ajouter le planning à mon agenda : Lien</h2>
+        <br>
+        <h2>
+          <a href="#" onclick="openAgendaModal()">Cliquer pour ajouter le planning à mon agenda</a>
+        </h2>
         <p> Sélectionnez votre campus pour afficher le planning correspondant </p>
 
         <br><br>
@@ -157,8 +177,8 @@
         <h1>Semaine 1 - Découverte</h1>
         <!-- Sélecteur de campus -->
         <div class="campus-selector">
-          <button onclick="selectCampus1('nantes')">Nantes</button>
-          <button onclick="selectCampus1('brest')">Brest</button>
+          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
         </div>
         <!-- Version Desktop : Affichage des 7 jours côte à côte -->
         <div class="desktop-schedule-container" id="desktopSchedule1">
@@ -181,8 +201,8 @@
         <h1>Semaine 2 - Adaptation</h1>
         <!-- Sélecteur de campus -->
         <div class="campus-selector">
-          <button onclick="selectCampus2('nantes')">Nantes</button>
-          <button onclick="selectCampus2('brest')">Brest</button>
+          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
         </div>
 
         <div class="desktop-schedule-container" id="desktopSchedule2">
@@ -205,8 +225,8 @@
         <h1>Semaine 3 - Cohésion</h1>
         <!-- Sélecteur de campus -->
         <div class="campus-selector">
-          <button onclick="selectCampus3('nantes')">Nantes</button>
-          <button onclick="selectCampus3('brest')">Brest</button>
+          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
         </div>
 
 
@@ -234,14 +254,16 @@
     <h5>Des questions ?</h5>
     <div class="colonnes">
       <div class="colonne">
-        <p><a href="Integration.html">Planning de l'intégration</a></p>
-        <p><a href="WEC.html">Week-end de cohésion</a></p>
-        <p><a href="WEI.html">Week-end d'intégration</a></p>
+        <p><a href="../Integration">Planning de l'intégration</a></p>
+        <p><a href="../WEC">Week-end de cohésion</a></p>
+        <p><a href="../WEI">Week-end d'intégration</a></p>
+        
       </div>
       <div class="colonne">
-        <p><a href="Bureaux.html">Bureaux de vie étudiante</a></p>
-        <p><a href="Bureaux.html">Assos et clubs</a></p>
-        <p><a href="Fede.html">Fédération des élèves</a></p>
+        <p><a href="../Bureaux">Bureaux de vie étudiante</a></p>
+        <p><a href="../Bureaux">Assos et clubs</a></p>
+        <p><a href="../Fede">Fédération des élèves</a></p>
+        <p><a href="../VSS">Prévention VSS</a></p>
         <p>Règlements & paiements</p>
       </div>
       <div class="colonne">
@@ -259,21 +281,21 @@
       {
         title: "Thu 21/08",
         events: [
-          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Acceuil des étudiants" },
+          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Accueil des étudiants" },
           {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Barbecue" }
         ]
       },
       {
         title: "Fri 22/08",
         events: [
-          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Acceuil des étudiants" },
+          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Accueil des étudiants" },
           {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Apéro des régions" }
         ]
       },
       {
         title: "Sat 23/08",
         events: [
-          {eventType: "event-color-eat", time: "11:00 - 13:00", text: "Brunch BDE" },
+          {eventType: "event-color-eat", time: "11:00 - 14:00", text: "Brunch" },
           {eventType: "event-color-act", time: "19:00 - 22:00", text: "Rallye des bâtiments" },
           {eventType: "event-color-night", time: "22:00 - 04:00", text: "Soirée ABC" }
         ]
@@ -281,7 +303,7 @@
       {
         title: "Sun 24/08",
         events: [
-          {eventType: "event-color-eat",  time: "11:00 - 13:00", text: "Brunch BDD" },
+          {eventType: "event-color-eat",  time: "11:00 - 14:00", text: "Brunch" },
           {eventType: "event-color-act", time: "14:00 - 19:00", text: "Rallye Nantais" },
           {eventType: "event-color-night", time: "22:00 - 04:00", text: "Tonus BDE" }
         ]
@@ -291,25 +313,30 @@
       {
         title: "Thu 21/08",
         events: [
-          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Accueil des étudiants" }          
+          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Accueil des étudiants" },
+          {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Barbecue" }          
         ]
       },
       {
         title: "Fri 22/08",
         events: [
-          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Acceuil des étudiants" }
+          {eventType: "event-color-orga", time: "10:00 - 12:00", text: "Présentation & Visite du campus" },
+          {eventType: "event-color-act", time: "14:00 - 18:00", text: "Course d'orientation" },
+          {eventType: "event-color-night", time: "21:00 - 03:00", text: "Soirée Alphabet" }
         ]
       },
       {
         title: "Sat 23/08",
         events: [
-          {eventType: "event-color-eat", time: "11:00 - 13:00", text: "1" }
+          {eventType: "event-color-act", time: "15:00 - 23:00", text: "Visite de Brest" }
         ]
       },
       {
         title: "Sun 24/08",
         events: [
-          {eventType: "event-color-eat",  time: "11:00 - 13:00", text: "2" }
+          {eventType: "event-color-eat",  time: "11:00 - 14:00", text: "Brunch" },
+          {eventType: "event-color-act", time: "14:00 - 18:00", text: "Après-midi plage" },
+          {eventType: "event-color-night", time: "21:00 - 03:00", text: "Soirée BDS" }
         ]
       }
     ];
@@ -318,7 +345,7 @@
       {
         title : "Mon 25/08",
         events: [
-          {eventType: "event-color-eat", time: "11:00 à 13:00", text: "Brunch BDA" },
+          {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
           {eventType: "event-color-act", time: "15:00 à 19:00", text: "Inte Contest" },
           {eventType: "event-color-night", time: "21:00 à 23:00", text: "Cohésion des petites classes" },
           {eventType: "event-color-night", time: "23:00 à 03:00", text: "Soirée BDE" }
@@ -327,7 +354,7 @@
       {
         title : "Tue 26/08",
         events: [
-          {eventType: "event-color-eat", time: "11:00 à 13:00", text: "Brunch BDS" },
+          {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
           {eventType: "event-color-night", time: "21:00 à 01:00", text: "Soirée BDS" }
         ]
       },
@@ -364,31 +391,40 @@
       {
         title: "Mon 25/08",
         events: [
-          {eventType: "event-color-eat", time: "11:00 à 13:00", text: "1" }
+          {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
+          {eventType: "event-color-act", time: "14:00 à 18:00", text: "JO" },
+          {eventType: "event-color-night", time: "22:00 à 05:00", text: "BDA Pop Art" }
         ]
       },
       {
         title : "Tue 26/08",
         events: [
-          {eventType: "event-color-eat", time: "11:00 à 13:00", text: "2" }
+          {eventType: "event-color-orga", time: "10:00 à 12:00", text: "Mot de l'Admin et du BDE" },
+          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Cohésion des petites classes" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Garden Party & Concert" }
         ]
       },
       {
         title : "Wed 27/08",
         events: [
-          {eventType: "event-color-orga", time: "12:30", text: "3" }
+          {eventType: "event-color-eat", time: "10:00 à 12:00", text: "Brunch" },
+          {eventType: "event-color-orga", time: "12:30", text: "Rentrée FISE A1" },
+          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Afterwork Olimpte & VSS" },
+          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée BDE" }
         ]
       },
       {
         title : "Thu 28/08",
         events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "4" }
+          {eventType: "event-color-eat", time: "18:00 à 20:00", text: "Cohésion des bâtiments" },
+          {eventType: "event-color-night", time: "20:00 à 01:00", text: "Soirée Casino" }
         ]
       },
       {
         title : "Fri 29/08",
         events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "5" }
+          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Afterwork ASF x BDA" },
+          {eventType: "event-color-night", time: "21:00 à 05:00", text: "Soirée FIP" }
         ]
       },
       {
@@ -403,6 +439,7 @@
       {
         title: "Mon 01/09",
         events: [
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIL/FIT 2A" },
           {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork Junior Atlantique" },
           {eventType: "event-color-night", time: "18:30 à 01:00", text: "Kebabas + Zythologie" }
         ]
@@ -410,7 +447,7 @@
       {
         title: "Tue 02/09",
         events: [
-          {eventType: "event-color-orga", time: "08:30", text: "Rentrée Alternants" },
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIL/FIT 1A" },
           {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork ASF" },
           {eventType: "event-color-night", time: "21:00 à 01:00", text: "Tonus BDI" }
         ]
@@ -418,6 +455,7 @@
       {
         title: "Wed 03/09",
         events: [
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FISE 2A" },
           {eventType: "event-color-night", time: "21:00 à 01:00", text: "Cabaret BDA" }
         ]
       },
@@ -439,25 +477,32 @@
       {
         title: "Mon 01/09",
         events: [
-          {eventType: "event-color-act", time: "16:30 à 18:00", text: "1" }
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIP 2A" },
+          {eventType: "event-color-act", time: "17:00 à 19:00", text: "Afterwork Kryptoshpere x BDD x BDE" },
+          {eventType: "event-color-night", time: "21:00 à 00:00", text: "Soirée BDI" }
         ]
       },
       {
         title: "Tue 02/09",
         events: [
-          {eventType: "event-color-orga", time: "08:30", text: "2" }
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIP 1A" },
+          {eventType: "event-color-act", time: "17:00 à 19:00", text: "Afterwork JA" },
+          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée Dellec" }
         ]
       },
       {
         title: "Wed 03/09",
         events: [
-          {eventType: "event-color-night", time: "21:00 à 01:00", text: "3" }
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FISE 2A" },
+          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Laser Game BDS" },
+          {eventType: "event-color-night", time: "22:00 à 03:00", text: "Soirée Resel x BDE" }
         ]
       },
       {
         title: "Thu 04/09",
         events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "4" }
+          {eventType: "event-color-eat", time: "18:00 à 20:00", text: "Repas BDI" },
+          {eventType: "event-color-night", time: "21:00 à 00:00", text: "Quizz BDA" },
         ]
       },
       {
@@ -615,8 +660,21 @@
       renderMobileDay3();
     }
     
+    // Fonction pour gérer l'état "active" des boutons
+    function setActiveButton(category, campus) {
+      const buttons = document.querySelectorAll(`.${category} button`);
+      buttons.forEach(button => {
+        if (button.getAttribute('onclick').includes(campus)) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+    }
+
     // Exemple de fonction pour la sélection de campus
     function selectCampus1(campus) {
+      setActiveButton('campus-selector', campus);
       currentCampus1 = campus === 'nantes' ? NantesData1 : BrestData1;
       currentDay1Index = 0;
       renderMobileDay1();
@@ -624,6 +682,7 @@
     }
 
     function selectCampus2(campus) {
+      setActiveButton('campus-selector', campus);
       currentCampus2 = campus === 'nantes' ? NantesData2 : BrestData2;
       currentDay2Index = 0;
       renderMobileDay2();
@@ -631,16 +690,68 @@
     }
 
     function selectCampus3(campus) {
+      setActiveButton('campus-selector', campus);
       currentCampus3 = campus === 'nantes' ? NantesData3 : BrestData3;
       currentDay3Index = 0;
       renderMobileDay3();
       renderDesktopDays3();
     }
-  </script>
-</body>
-</html>
-      renderDesktopDays3();
+
+    // Fonction pour ouvrir la boîte modale
+    function openAgendaModal() {
+      const modal = document.getElementById('agendaModal');
+      modal.style.display = 'block';
+    }
+
+    // Fonction pour fermer la boîte modale
+    function closeAgendaModal() {
+      const modal = document.getElementById('agendaModal');
+      modal.style.display = 'none';
+    }
+
+    // Ferme la boîte modale si l'utilisateur clique en dehors
+    window.onclick = function(event) {
+      const modal = document.getElementById('agendaModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+    // Fonction pour copier un lien dans le presse-papiers
+    function copyToClipboard(inputId) {
+      const input = document.getElementById(inputId);
+      input.select();
+      input.setSelectionRange(0, 99999); // Pour les mobiles
+      document.execCommand("copy");
+      alert("Lien copié : " + input.value);
     }
   </script>
+
+  <!-- Boîte modale pour le planning -->
+  <div id="agendaModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAgendaModal()">&times;</span>
+      <h2>Ajouter le planning à mon agenda</h2>
+      <br><br>
+      <h4>Ajoutez le planning de l'intégration à vos agendas personnels en copiant les liens suivants :</h4>
+      <br>
+      <h5>Campus de Nantes :</h5>
+      <input value="https://calendar.google.com/calendar/ical/9d762ece66bf4e8e689b8c35122db67ec41e341f57604666290be2a18f81f264%40group.calendar.google.com/public/basic.ics" id="nantesLink" readonly />
+      <button onclick="copyToClipboard('nantesLink')">Copier</button>
+      <br><br>
+      <h5>Campus de Brest :</h5>
+      <input type="text" value="https://example.com/planning-brest.ics" id="brestLink" readonly />
+      <button onclick="copyToClipboard('brestLink')">Copier</button>
+      <br><br><br>
+      <h3>Sur Google Calendar :</h3> <br>
+      <h4> Cliquez sur le bouton + puis "A partir d'une url" dans la section "Autres agendas" </h4>
+      <h4> Collez l'URL correspondante et ajoutez l'agenda </h4>
+      <br><br>
+      <h3>Sur Zimbra :</h3> <br>
+      <h4> Allez dans la section "Calendrier", puis dans les paramètres des calendriers </h4>
+      <h4> Ajoutez un calendrier externe, et sélectionnez l'option abonnement iCal </h4>
+      <h4> Collez l'URL correspondante et ajoutez le calendrier </h4>
+    </div>
+  </div>
 </body>
 </html>
