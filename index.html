@@ -8,31 +8,37 @@
 	</head>
 	<body>
 		<header>
-			<nav>
-				<h1><a href="index.html">BDE IMT Atlantique</a></h1>
-				<div class="right">
-                    <p><a href="index.html">Accueil</a></p>
-                    <div class="dropdown">
-                      <p>Intégration</p>
-                      <div class="dropdown-content">
-                        <a href="Integration">Planning</a>
-                        <a href="WEI.html">WEI</a>
-                        <a href="WEC.html">WEC</a>
-                      </div>
-                    </div>
-                    <div class="dropdown">
-                      <p>Vie Asso</p>
-                      <div class="dropdown-content">
-                        <a href="Fede.html">Mot de la Fédé</a>
-                        <a href="Bureaux.html">Bureaux des élèves</a>
-                        <a href="Bureaux.html">Assos & Clubs</a>
-                        <a href="VSS.html">VSS</a>
-                      </div>
-                    </div>
-                    <p><a href="index.html">Nous contacter</a></p>
-                
-                  </div>
-			</nav>
+      <nav>
+        <h1><a href="#">BDE IMT Atlantique</a></h1>
+        <button class="burger-menu" onclick="toggleMenu()">☰</button>
+        <div class="right" id="nav-menu">
+          <div class="dropdown">
+            <p><a href="#">Accueil</a></p>
+          </div>
+          <div class="dropdown">
+            <p class="dropdown-toggle">Intégration ▾</p>
+            <div class="dropdown-content">
+              <a href="Integration">Planning</a>
+              <a href="WEI">WEI</a>
+              <a href="WEC">WEC</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <p class="dropdown-toggle">Vie Asso ▾</p>
+            <div class="dropdown-content">
+              <a href="Fede">Mot de la Fédé</a>
+              <a href="Bureaux">Bureaux des élèves</a>
+              <a href="Bureaux">Assos & Clubs</a>
+              <a href="VSS">VSS</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <p><a href="index.html">Nous contacter</a></p>
+          </div>
+          
+        </div>
+      </nav>
+     
 
       <br><br><br>
       <div class="sticker">
@@ -51,14 +57,16 @@
           <br><br>
           
           <div class="buttons" style="text-align: center;">
-            <button onclick="location.href='Integration.html'">Planning de l'intégration</button>
-            <button onclick="location.href='WEC.html'">Week-end de cohésion</button>
-            <button onclick="location.href='WEI.html'">Week-end d'intégration</button>
+            <button onclick="location.href='Integration'">Planning de l'intégration</button>
+            <button onclick="location.href='WEC'">Week-end de cohésion</button>
+            <button onclick="location.href='WEI'">Week-end d'intégration</button>
             <br><br>
-            <button onclick="location.href='Bureaux.html'">Bureaux de vie étudiante</button>
-            <button onclick="location.href='Fede.html'">Fédération des élèves</button>
+            <button onclick="location.href='Bureaux'">Bureaux de vie étudiante</button>
+                        <button onclick="location.href='VSS'">Prévention VSS</button>
+
+            <button onclick="location.href='Fede'">Fédération des élèves</button>
             <br><br>
-            <button onclick="location.href='Contact.html'">Nous contacter</button>
+            <button onclick="location.href='Contact'">Nous contacter</button>
           </div>
 
         </div>  
@@ -93,3 +101,7 @@
 
 
   <script src="js/script.js"></script>
+    
+  
+  
+</body>

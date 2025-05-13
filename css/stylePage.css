@@ -11,7 +11,7 @@ body {
 }
 
 header {
-	background: linear-gradient(#17223B, #3FBADE, #9DCB9C);
+	background: linear-gradient(#2b3e6b, #3FBADE, #9DCB9C);
 }
 
 header nav {
@@ -197,9 +197,9 @@ footer{
   /* Fin du pied de page */
 
 @media screen and (max-width: 640px) {
-	nav .right p {
-		display: none;
-	}
+	header nav > .right > p {
+    display: none;
+  }
 
 	.presentation .product-presentation h1 {
 		font-size: 2em;
@@ -618,6 +618,7 @@ nav {
   
   nav .dropdown-content {
 	display: none;
+  flex-direction: column;
 	position: absolute;
 	background-color: white;
 	color: black;
@@ -625,6 +626,18 @@ nav {
 	box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 	border-radius: 5px;
+  }
+
+  /* Afficher quand la dropdown porte la classe .open */
+  nav .dropdown.open .dropdown-content {
+    display: flex; /* ou block selon votre layout */
+    flex-direction: column;
+  }
+
+  /* Styliser le toggle pour indiquer que c’est cliquable */
+  nav .dropdown-toggle {
+    cursor: pointer;
+    user-select: none;
   }
   
   nav .dropdown-content a {
@@ -636,6 +649,7 @@ nav {
   
   nav .dropdown-content a:hover {
 	background-color: #f1f1f1;
+  color: black;
   }
   
   /* Afficher le menu déroulant au survol */
@@ -663,3 +677,100 @@ nav {
     font-size: 2em; /* Réduisez la taille de la police pour les petits écrans */
   }
 }
+
+
+
+
+
+
+
+/* Style pour le bouton burger */
+.burger-menu {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Style par défaut pour le menu */
+#nav-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+@media screen and (max-width: 768px) {
+  .burger-menu {
+    display: block; /* Affiche le bouton burger sur mobile */
+  }
+
+  #nav-menu {
+    display: none; /* Masque le menu par défaut */
+    flex-direction: column;
+    background-color: #17223B;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 1000;
+    border-radius: 5px;
+  }
+
+  #nav-menu.show {
+    display: flex; /* Affiche le menu lorsqu'il est actif */
+  }
+
+  #nav-menu p, #nav-menu a {
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+  }
+
+  .dropdown-content {
+    display: none;
+    flex-direction: column;
+    background-color: #1C1C1C;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: flex;
+  }
+
+  #nav-menu .dropdown-content a {
+    color: black;          /* plutôt que blanc */
+    text-decoration: none;
+    padding: 0.5rem 1rem; /* espace pour cliquer */
+  }
+
+  nav .dropdown {
+    position: relative;   /* pour que l’absolu soit relatif à ce parent */
+  }
+
+  nav .dropdown-content {
+    display: none;             
+    position: absolute;        /* positionné par rapport à .dropdown */
+    top: 100%;                 /* juste sous le toggle */
+    left: 0;                   /* aligné à gauche */
+    width: 100%;               /* même largeur que le menu parent */
+    max-width: 100vw;          /* pas plus large que l’écran */
+    box-sizing: border-box;    /* inclut les paddings dans la largeur */
+    background: #fff;          
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 10;               /* au-dessus des autres éléments */
+  }
+
+  /* Quand on ajoute .open */
+  nav .dropdown.open .dropdown-content {
+    display: flex;
+  }
+  
+}
+
+
+
+

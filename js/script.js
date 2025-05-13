@@ -502,3 +502,52 @@ function showSchedule(campus) {
 	// Réinitialiser les boutons actifs
 	document.querySelectorAll("button").forEach(btn => btn.classList.remove("active"));
   }
+
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+	const burger = document.querySelector('.burger-menu');
+	const menu   = document.getElementById('nav-menu');
+  
+	// 1) Ouverture/fermeture du menu principal
+	burger.addEventListener('click', function(e) {
+	  e.stopPropagation();           // n’envoie pas le clic au document
+	  menu.classList.toggle('show');
+	});
+  
+	// 2) Ouverture/fermeture des sous-menus au clic
+	document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+	  toggle.addEventListener('click', function(e) {
+		e.stopPropagation();         // idem, pour ne pas déclencher le document click
+		const dropdown = this.parentElement;
+		// fermer les autres si besoin
+		document.querySelectorAll('.dropdown.open')
+		  .forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+		dropdown.classList.toggle('open');
+	  });
+	});
+  
+	// 3) Empêcher la fermeture quand on clique DANS le contenu
+	document.querySelectorAll('.dropdown-content').forEach(content => {
+	  content.addEventListener('click', function(e) {
+		e.stopPropagation();
+	  });
+	});
+  
+	// 4) Fermeture de tout sous-menu quand on clique AILLEURS
+	document.addEventListener('click', function() {
+	  // Ferme tout dropdown ouvert
+	  document.querySelectorAll('.dropdown.open')
+		.forEach(d => d.classList.remove('open'));
+	  // (optionnel) ferme aussi le menu principal
+	  // menu.classList.remove('show');
+	});
+  });
+
+
+
+
+  
