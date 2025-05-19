@@ -1,0 +1,835 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
+
+:root {
+	--violet: #17223B;
+}
+
+body {
+	margin: 0;
+	font-family: 'Montserrat', sans-serif;
+	color: white;
+}
+
+header {
+	background: linear-gradient(#2b3e6b, #3FBADE, #9DCB9C);
+}
+
+header nav {
+	padding: 30px 5% 0px 5%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+header nav h1 {
+	margin: 0;
+	text-transform: uppercase;
+	color: var(--violet);
+}
+
+h2 {
+	margin: 0;
+	text-transform: uppercase;
+  font-size: 20px;
+	color: var(--violet);
+}
+
+h3 {
+	margin: 0;
+	text-transform: uppercase;
+  font-size: 16px;
+	color: var(--violet);
+}
+
+h4 {
+	margin: 0;
+  font-size: 12px;
+	color: var(--violet);
+}
+
+h5 {
+	margin: 0;
+  font-size: 11px;
+	color: var(--violet);
+}
+
+header nav .right {
+	display: flex;
+	align-items: center;
+}
+header nav .right p {
+	margin: 0 15px 0 0;
+	color: #ccc;
+}
+header nav .right p:hover {
+	color: white;
+	cursor: pointer;
+}
+header nav .right button {
+	padding: 5px 15px;
+	font-size: 16px;
+	background-color: inherit;
+	border: 1px solid var(--violet);
+	border-radius: 5px;
+	color: var(--violet);
+	cursor: pointer;
+	transition: color 0.5s, background-color 0.5s;
+}
+header nav .right button:hover {
+	color: inherit;
+	background-color: var(--violet);
+}
+/* Style des liens dans le pied de page */
+header a {
+	text-decoration: none; /* Supprime le soulignement */
+	color: white; /* Utilise la couleur du texte environnant */
+  text-decoration: underline;
+}
+header nav a {
+	text-decoration: none; /* Supprime le soulignement */
+	color: inherit; /* Utilise la couleur du texte environnant */
+}
+header nav a:visited {
+	color: inherit; /* Empêche la couleur violette pour les liens visités */
+}
+
+.presentation {
+	padding: 30px 5%;
+	margin-top: 5%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.presentation .product-presentation {
+	width: 100%;
+	flex-shrink: 3;
+}
+.presentation .product-presentation h1 {
+	margin: 0;
+	font-size: 4vw;
+	width: 80%;
+}
+.presentation .product-presentation p {
+	font-weight: 500;
+  font-size: 1vw;
+	color: #e9e9e9;
+}
+.presentation .product-presentation button {
+	margin-top: 20px;
+	padding: 15px 20px;
+	font-size: 15px;
+	border-radius: 10px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+.presentation .image-presentation img {
+	width: 100%;
+}
+
+.first .product-presentation button {
+	background-color: var(--violet);
+	color: white;
+	border: 1px solid var(--violet);
+	transition: background-color 0.5s, color 0.5s;
+}
+.first .product-presentation button:hover {
+	background-color: inherit;
+	color: var(--violet);
+}
+.first .product-presentation .small-images {
+	margin-top: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.first .product-presentation .small-images .small {
+	padding: 20px;
+	background-color: #33314d;
+	margin: 0 15px 15px 0;
+	border-radius: 20px;
+	transition: filter 0.5s;
+}
+.first .product-presentation .small-images .small:hover {
+	filter: brightness(50%);
+}
+.first .product-presentation .small-images .small img {
+	width: 120px;
+}
+
+.second {
+	margin: 0;
+	background-color: #13181d;
+}
+.second .product-presentation .new {
+	color: var(--violet);
+}
+.second .product-presentation button {
+	background-color: inherit;
+	border: 1px solid var(--violet);
+	color: var(--violet);
+	transition: background-color 0.5s, color 0.5s;
+}
+.second .product-presentation button:hover {
+	background-color: var(--violet);
+	color: white;
+}
+
+/* Pied de page */
+footer{
+	background-color: #17223B;
+	padding: 25px 100px;
+	color:#828282;
+  }
+  footer .colonnes{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+  }
+  /* Style des liens dans le pied de page */
+  footer a {
+	text-decoration: none; /* Supprime le soulignement */
+	color: inherit; /* Utilise la couleur du texte environnant */
+  }
+  footer a:visited {
+	color: inherit; /* Empêche la couleur violette pour les liens visités */
+  }
+  /* Fin du pied de page */
+
+@media screen and (max-width: 640px) {
+	header nav > .right > p {
+    display: none;
+  }
+
+	.presentation .product-presentation h1 {
+		font-size: 2em;
+	}
+
+  .presentation .product-presentation p {
+		font-size: 1em;
+	}
+
+	.presentation .image-presentation {
+		display: none;
+	}
+	.first .product-presentation .small-images .small img {
+		width: 90px;
+	}
+
+	
+}
+
+
+
+.location-buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: var(--violet);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .location-buttons button:hover {
+    background-color: #a029d9;
+  }
+  
+  .small-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .small-images img {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+	margin-top: 10px; /* Ajoute un espace au-dessus des images */
+  }
+  
+  .image-caption {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ccc;
+  }
+
+  /* Conteneur principal des boutons et des images */
+#image-container2 {
+	display: flex;
+	flex-direction: column; /* Aligne les boutons et les images verticalement */
+	align-items: center; /* Centre les éléments horizontalement */
+	gap: 20px; /* Ajoute un espace entre les boutons et les images */
+  }
+  
+  /* Conteneur des boutons */
+  #image-container2 .dynamic-buttons {
+	display: flex; /* Aligne les boutons horizontalement */
+	flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si nécessaire */
+	justify-content: center; /* Centre les boutons horizontalement */
+	gap: 10px; /* Ajoute un espace entre les boutons */
+  }
+  
+  /* Conteneur des images */
+  #image-container2 .image-wrapper {
+	display: flex;
+	flex-direction: column; /* Empile la légende sous chaque image */
+	align-items: center; /* Centre les images et légendes horizontalement */
+	text-align: center; /* Centre le texte des légendes */
+	margin: 10px; /* Ajoute un espace autour de chaque image-wrapper */
+  }
+  
+  /* Style des images */
+  #image-container2 .image-wrapper img {
+	max-width: 120px; /* Limite la largeur des images */
+	height: auto; /* Conserve les proportions des images */
+	border-radius: 10px; /* Ajoute des coins arrondis */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ajoute une ombre */
+  }
+  
+  /* Style des légendes */
+  #image-container2 .image-caption {
+	margin-top: 5px;
+	font-size: 14px;
+	color: #ffffff;
+  }
+  
+
+  .location-buttons button.active {
+    background-color: inherit; /* Couleur plus foncée pour le bouton actif */
+    color: #17223B;
+    border: 2px solid #17223B; /* Optionnel : ajoute une bordure pour le bouton actif */
+  }
+
+
+
+
+/* Styles pour la boîte modale */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-content .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+
+
+  /* Boutons dynamiques */
+  .dynamic-button {
+	padding: 10px 20px;
+	margin: 5px;
+	background-color: #17223B;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+  }
+  
+  .dynamic-button:hover {
+	background-color: #3FBADE;
+  }
+
+  .dynamic-buttons button.active {
+	background-color: inherit; /* Couleur plus claire pour le bouton actif */
+	color: #17223B;
+	border: 2px solid #17223B; /* Ajoute une bordure pour le bouton actif */
+  }
+
+
+
+
+
+  .sticker-title {
+    position: relative;
+    background-color: inherit; /* Couleur de fond du sticker */
+    color: #17223B; /* Couleur du texte */
+    font-size: 3em; /* Taille du texte */
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 40px; /* Espacement interne */
+    margin: 20px auto; /* Espacement externe */
+    width: fit-content; /* Ajuste la largeur au contenu */
+    transform: rotate(0deg); /* Inclinaison du sticker */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour l'effet de sticker */
+    border-radius: 10px; /* Coins arrondis */
+    border: 3px solid #17223B; /* Bordure pour un effet de sticker */
+}
+
+.sticker-title h1 {
+    margin: 0; /* Supprime les marges par défaut */
+    font-family: 'Montserrat', sans-serif; /* Police utilisée dans le reste de la page */
+}
+
+@media screen and (max-width: 640px) {
+    .sticker-title {
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 1.6em; /* Réduit la taille du texte sur mobile */
+        padding: 10px 10px; /* Ajuste l'espacement interne */
+        transform: rotate(0deg); /* Réduit l'inclinaison sur mobile */
+    }
+}
+
+
+
+
+
+.sticker {
+    position: relative;
+    background-color: #17223B; /* Couleur de fond du sticker */
+    color: inherit; /* Couleur du texte */
+    font-size: 3em; /* Taille du texte */
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 40px; /* Espacement interne */
+    margin: 20px auto; /* Espacement externe */
+    width: fit-content; /* Ajuste la largeur au contenu */
+    transform: rotate(0deg); /* Inclinaison du sticker */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour l'effet de sticker */
+    border-radius: 10px; /* Coins arrondis */
+    border: 3px solid #17223B; /* Bordure pour un effet de sticker */
+}
+
+.sticker h1 {
+    margin: 0; /* Supprime les marges par défaut */
+    font-family: 'Montserrat', sans-serif; /* Police utilisée dans le reste de la page */
+}
+
+
+@media screen and (max-width: 640px) {
+    .sticker {
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 1.6em; /* Réduit la taille du texte sur mobile */
+        padding: 10px 10px; /* Ajuste l'espacement interne */
+        transform: rotate(0deg); /* Réduit l'inclinaison sur mobile */
+    }
+}
+
+
+
+
+/* INTEGRATIONS 2025 */
+
+
+.integration-buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: var(--violet);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.integration-buttons button:hover {
+    background-color: #3FBADE;
+}
+
+.integration-buttons button.active {
+    background-color: inherit;
+    color: #17223B;
+    border: 2px solid #17223B;
+}
+
+.campus-selector button.active {
+  background-color: inherit;
+  color: #17223B;
+  border: 2px solid #17223B;
+}
+
+
+
+
+
+.buttons {
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .buttons button.active {
+    background-color: inherit;
+    color: #17223B;
+    border: 2px solid #17223B;    }
+
+	#calendar-container {
+		max-width: 90vw;
+		margin: 0 auto;
+		overflow-x: auto;
+		padding: 1rem;
+	  }
+	  
+	  #calendar-table {
+		border-collapse: separate;
+		border-spacing: 0;
+		width: 100%;
+		border: 4px solid #343a40; /* Couleur et épaisseur du contour */
+		border-radius: 16px; /* Coins arrondis */
+		overflow: hidden;
+		background-color: white;
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	  }
+	  
+	  #calendar-table th,
+	  #calendar-table td {
+		border: 1px solid #dee2e6;
+		padding: 12px;
+		text-align: center;
+	  }
+	  
+	  #calendar-table th:first-child {
+		border-top-left-radius: 12px;
+	  }
+	  
+	  #calendar-table th:last-child {
+		border-top-right-radius: 12px;
+	  }
+	  
+	  #calendar-table tr:last-child td:first-child {
+		border-bottom-left-radius: 12px;
+	  }
+	  
+	  #calendar-table tr:last-child td:last-child {
+		border-bottom-right-radius: 12px;
+	  }
+	  
+	  .event {
+		margin: 5px 0;
+		padding: 6px 10px;
+		border-radius: 8px;
+		color: white;
+		font-weight: 500;
+	  }
+
+
+
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #17223B;
+  color: white;
+}
+
+th {
+  border: 2px solid #ccc;
+  border-color: #17223B;
+  padding: 10px;
+  color : white;
+  text-align: center;
+  min-width: 100px;
+}
+
+td {
+  border: 2px solid #ccc;
+  border-color: #17223B;
+  padding: 10px;
+  color : #17223B;
+  text-align: center;
+  min-width: 100px;
+}	
+
+/* Responsive */
+@media (max-width: 768px) {
+  th, td {
+    padding: 6px;
+    font-size: 0.9rem;
+    min-width: 80px;
+  }
+}
+
+
+
+
+/* Style pour la barre de navigation */
+nav {
+	position: relative;
+  }
+  
+  /* Style pour les éléments du menu */
+  nav .right {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+  }
+  
+  nav .dropdown {
+	position: relative;
+  }
+  
+  nav .dropdown-content {
+	display: none;
+  flex-direction: column;
+	position: absolute;
+	background-color: white;
+	color: black;
+	min-width: 150px;
+	box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	border-radius: 5px;
+  }
+
+  /* Afficher quand la dropdown porte la classe .open */
+  nav .dropdown.open .dropdown-content {
+    display: flex; /* ou block selon votre layout */
+    flex-direction: column;
+  }
+
+  /* Styliser le toggle pour indiquer que c’est cliquable */
+  nav .dropdown-toggle {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  nav .dropdown-content a {
+	color: black;
+	padding: 10px 15px;
+	text-decoration: none;
+	display: block;
+  }
+  
+  nav .dropdown-content a:hover {
+	background-color: #f1f1f1;
+  color: black;
+  }
+  
+  /* Afficher le menu déroulant au survol */
+  nav .dropdown:hover .dropdown-content {
+	display: block;
+  }
+
+
+  .responsive-image {
+	max-width: 600px;
+	width: 100%;
+	height: auto;
+  }
+
+
+
+  /* Style par défaut pour les grands écrans */
+.responsive-title {
+  font-size: 3.5em;
+}
+
+/* Style pour les écrans de moins de 768px */
+@media screen and (max-width: 768px) {
+  .responsive-title {
+    font-size: 2em; /* Réduisez la taille de la police pour les petits écrans */
+  }
+}
+
+
+
+
+
+
+
+/* Style pour le bouton burger */
+.burger-menu {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Style par défaut pour le menu */
+#nav-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+@media screen and (max-width: 768px) {
+  .burger-menu {
+    display: block; /* Affiche le bouton burger sur mobile */
+  }
+
+  #nav-menu {
+    display: none; /* Masque le menu par défaut */
+    flex-direction: column;
+    background-color: #17223B;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 1000;
+    border-radius: 5px;
+  }
+
+  #nav-menu.show {
+    display: flex; /* Affiche le menu lorsqu'il est actif */
+  }
+
+  #nav-menu p, #nav-menu a {
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+  }
+
+  .dropdown-content {
+    display: none;
+    flex-direction: column;
+    background-color: #1C1C1C;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: flex;
+  }
+
+  #nav-menu .dropdown-content a {
+    color: black;          /* plutôt que blanc */
+    text-decoration: none;
+    padding: 0.5rem 1rem; /* espace pour cliquer */
+  }
+
+  nav .dropdown {
+    position: relative;   /* pour que l’absolu soit relatif à ce parent */
+  }
+
+  nav .dropdown-content {
+    display: none;             
+    position: absolute;        /* positionné par rapport à .dropdown */
+    top: 100%;                 /* juste sous le toggle */
+    left: 0;                   /* aligné à gauche */
+    width: 100%;               /* même largeur que le menu parent */
+    max-width: 100vw;          /* pas plus large que l’écran */
+    box-sizing: border-box;    /* inclut les paddings dans la largeur */
+    background: #fff;          
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 10;               /* au-dessus des autres éléments */
+  }
+
+  /* Quand on ajoute .open */
+  nav .dropdown.open .dropdown-content {
+    display: flex;
+  }
+  
+}
+
+
+
+
+
+
+.violet-button {
+	padding: 5px 15px;
+	font-size: 16px;
+	background-color: inherit;
+	border: 1px solid var(--violet);
+	border-radius: 5px;
+	color: var(--violet);
+	cursor: pointer;
+	transition: color 0.5s, background-color 0.5s;
+}
+.violet-button:hover {
+	color: inherit;
+	background-color: var(--violet);
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.logo {
+  width: min(100%, 1000px); /* Ne dépasse jamais 300px, mais peut remplir moins */
+  height: auto;
+}
+
+.campus-selector {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap; /* Pour forcer sur une seule ligne */
+  justify-content: center;
+  padding: 0 10px;
+}
+
+.violet-button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 20px 40px;
+  font-size: 1.5em;
+  white-space: nowrap;
+}
+
+/* Responsive : adapter les boutons sur petits écrans */
+@media (max-width: 600px) {
+  .violet-button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+
+  .campus-selector {
+    gap: 10px;
+  }
+}
+

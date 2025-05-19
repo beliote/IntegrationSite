@@ -134,7 +134,7 @@
 <body>
   <header>
     <nav>
-      <h1><a href="#">BDE IMT Atlantique</a></h1>
+      <h1><a href="../../">BDE IMT Atlantique</a></h1>
       <button class="burger-menu" onclick="toggleMenu()">☰</button>
       <div class="right" id="nav-menu">
         <div class="dropdown">
@@ -170,21 +170,16 @@
     <section class="presentation first">
       <div class="product-presentation">
 
-        <h1>Planning par campus</h1>
+        <h1>Planning du campus de Nantes</h1>
         <br>
         <h2>
           <a href="#" onclick="openAgendaModal()">Cliquer pour ajouter le planning à mon agenda</a>
         </h2>
-        <p> Sélectionnez votre campus pour afficher le planning correspondant </p>
 
         <br><br>
 
         <h1>Semaine 1 - Découverte</h1>
-        <!-- Sélecteur de campus -->
-        <div class="campus-selector">
-          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
-          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
-        </div>
+        
         <!-- Version Desktop : Affichage des 7 jours côte à côte -->
         <div class="desktop-schedule-container" id="desktopSchedule1">
           <!-- Le contenu sera injecté ici via JS -->
@@ -204,11 +199,6 @@
         <br><br>
 
         <h1>Semaine 2 - Adaptation</h1>
-        <!-- Sélecteur de campus -->
-        <div class="campus-selector">
-          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
-          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
-        </div>
 
         <div class="desktop-schedule-container" id="desktopSchedule2">
           <!-- Le contenu sera injecté ici via JS -->
@@ -228,12 +218,6 @@
         <br><br>
 
         <h1>Semaine 3 - Cohésion</h1>
-        <!-- Sélecteur de campus -->
-        <div class="campus-selector">
-          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
-          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
-        </div>
-
 
         <div class="desktop-schedule-container" id="desktopSchedule3">
           <!-- Le contenu sera injecté ici via JS -->
@@ -277,7 +261,7 @@
         <p>Nous contacter</p>
       </div>
     </div>
-    <p>BDE IMT Atlantique</p>
+    <p>&copy;BDE IMT Atlantique</p>
   </footer>
 
   <script>
@@ -314,44 +298,14 @@
         ]
       }
     ];
-    const BrestData1 = [
-      {
-        title: "Thu 21/08",
-        events: [
-          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Accueil des étudiants" },
-          {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Barbecue" }          
-        ]
-      },
-      {
-        title: "Fri 22/08",
-        events: [
-          {eventType: "event-color-orga", time: "10:00 - 12:00", text: "Présentation & Visite du campus" },
-          {eventType: "event-color-act", time: "14:00 - 18:00", text: "Course d'orientation" },
-          {eventType: "event-color-night", time: "21:00 - 03:00", text: "Soirée Alphabet" }
-        ]
-      },
-      {
-        title: "Sat 23/08",
-        events: [
-          {eventType: "event-color-act", time: "15:00 - 23:00", text: "Visite de Brest" }
-        ]
-      },
-      {
-        title: "Sun 24/08",
-        events: [
-          {eventType: "event-color-eat",  time: "11:00 - 14:00", text: "Brunch" },
-          {eventType: "event-color-act", time: "14:00 - 18:00", text: "Après-midi plage" },
-          {eventType: "event-color-night", time: "21:00 - 03:00", text: "Soirée BDS" }
-        ]
-      }
-    ];
+    
 
     const NantesData2 = [
       {
         title : "Mon 25/08",
         events: [
           {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
-          {eventType: "event-color-act", time: "15:00 à 19:00", text: "Inte Contest" },
+          {eventType: "event-color-act", time: "15:00 à 19:00", text: "Visite de Nantes" },
           {eventType: "event-color-night", time: "21:00 à 23:00", text: "Cohésion des petites classes" },
           {eventType: "event-color-night", time: "23:00 à 03:00", text: "Soirée BDE" }
         ]
@@ -360,6 +314,7 @@
         title : "Tue 26/08",
         events: [
           {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
+          {eventType: "event-color-act", time: "15:00 à 19:00", text: "Inte Contest" },
           {eventType: "event-color-night", time: "21:00 à 01:00", text: "Soirée BDS" }
         ]
       },
@@ -368,21 +323,21 @@
         events: [
           {eventType: "event-color-orga", time: "12:30", text: "Rentrée FISE A1" },
           {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork Olimpte" },
-          {eventType: "event-color-night", time: "18:30 à 01:00", text: "Spatulas + Oenologie" }
+          {eventType: "event-color-night", time: "18:30 à 01:00", text: "Hot Dogs x Oenologie" }
         ]
       },
       {
         title : "Thu 28/08",
         events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Afterwork Kulturap" },
-          {eventType: "event-color-night", time: "21:00 à 04:00", text: "Tonus BDE x Dest'IMT" }
+          {eventType: "event-color-act", time: "14:00 à 18:00", text: "Aprem BDS" },
+          {eventType: "event-color-night", time: "21:00 à 04:00", text: "Tonus BDE" }
         ]
       },
       {
         title : "Fri 29/08",
         events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Présentation des clubs BDE" },
-          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Soirée BDA" }
+          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Présentation des clubs" },
+          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée BDA" }
         ]
       },
       {
@@ -392,61 +347,14 @@
         ]
       }
     ];
-    const BrestData2 = [
-      {
-        title: "Mon 25/08",
-        events: [
-          {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
-          {eventType: "event-color-act", time: "14:00 à 18:00", text: "JO" },
-          {eventType: "event-color-night", time: "22:00 à 05:00", text: "BDA Pop Art" }
-        ]
-      },
-      {
-        title : "Tue 26/08",
-        events: [
-          {eventType: "event-color-orga", time: "10:00 à 12:00", text: "Mot de l'Admin et du BDE" },
-          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Cohésion des petites classes" },
-          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Garden Party & Concert" }
-        ]
-      },
-      {
-        title : "Wed 27/08",
-        events: [
-          {eventType: "event-color-eat", time: "10:00 à 12:00", text: "Brunch" },
-          {eventType: "event-color-orga", time: "12:30", text: "Rentrée FISE A1" },
-          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Afterwork Olimpte & VSS" },
-          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée BDE" }
-        ]
-      },
-      {
-        title : "Thu 28/08",
-        events: [
-          {eventType: "event-color-eat", time: "18:00 à 20:00", text: "Cohésion des bâtiments" },
-          {eventType: "event-color-night", time: "20:00 à 01:00", text: "Soirée Casino" }
-        ]
-      },
-      {
-        title : "Fri 29/08",
-        events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Afterwork ASF x BDA" },
-          {eventType: "event-color-night", time: "21:00 à 05:00", text: "Soirée FIP" }
-        ]
-      },
-      {
-        title : "Sat 30/08 & Sun 31/08",
-        events: [
-          { time: "WE", text: "Week-end de cohésion" }
-        ]
-      }
-    ];
-
+    
     const NantesData3 = [
       {
         title: "Mon 01/09",
         events: [
           {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIL/FIT 2A" },
           {eventType: "event-color-act", time: "16:30 à 18:00", text: "Afterwork Junior Atlantique" },
-          {eventType: "event-color-night", time: "18:30 à 01:00", text: "Kebabas + Zythologie" }
+          {eventType: "event-color-night", time: "18:30 à 01:00", text: "Kebabas x Zythologie" }
         ]
       },
       {
@@ -461,14 +369,14 @@
         title: "Wed 03/09",
         events: [
           {eventType: "event-color-orga", time: "08:30", text: "Rentrée FISE 2A" },
-          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Cabaret BDA" }
+          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Cabaret BDA" }
         ]
       },
       {
         title: "Thu 04/09",
         events: [
-          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Présentation des clubs BDA" },
-          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Nuit du volley" }
+          {eventType: "event-color-act", time: "14:00 à 18:00", text: "Présentation des clubs BDS" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Nuit du volley x Kulturap" }
         ]
       },
       {
@@ -478,45 +386,7 @@
         ]
       }
     ];
-    const BrestData3 = [
-      {
-        title: "Mon 01/09",
-        events: [
-          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIP 2A" },
-          {eventType: "event-color-act", time: "17:00 à 19:00", text: "Afterwork Kryptoshpere x BDD x BDE" },
-          {eventType: "event-color-night", time: "21:00 à 00:00", text: "Soirée BDI" }
-        ]
-      },
-      {
-        title: "Tue 02/09",
-        events: [
-          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIP 1A" },
-          {eventType: "event-color-act", time: "17:00 à 19:00", text: "Afterwork JA" },
-          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée Dellec" }
-        ]
-      },
-      {
-        title: "Wed 03/09",
-        events: [
-          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FISE 2A" },
-          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Laser Game BDS" },
-          {eventType: "event-color-night", time: "22:00 à 03:00", text: "Soirée Resel x BDE" }
-        ]
-      },
-      {
-        title: "Thu 04/09",
-        events: [
-          {eventType: "event-color-eat", time: "18:00 à 20:00", text: "Repas BDI" },
-          {eventType: "event-color-night", time: "21:00 à 00:00", text: "Quizz BDA" },
-        ]
-      },
-      {
-        title: "Fri 05/09 - Sun 07/09",
-        events: [
-          { time: "WE", text: "Week-end d'intégration" }
-        ]
-      }
-    ];
+    
 
     let currentDay1Index = 0;
     let currentDay2Index = 0;
@@ -744,10 +614,6 @@
       <h5>Campus de Nantes :</h5>
       <input value="https://calendar.google.com/calendar/ical/9d762ece66bf4e8e689b8c35122db67ec41e341f57604666290be2a18f81f264%40group.calendar.google.com/public/basic.ics" id="nantesLink" readonly />
       <button onclick="copyToClipboard('nantesLink')">Copier</button>
-      <br><br>
-      <h5>Campus de Brest :</h5>
-      <input type="text" value="https://example.com/planning-brest.ics" id="brestLink" readonly />
-      <button onclick="copyToClipboard('brestLink')">Copier</button>
       <br><br><br>
       <h3>Sur Google Calendar :</h3> <br>
       <h4> Cliquez sur le bouton + puis "A partir d'une url" dans la section "Autres agendas" </h4>

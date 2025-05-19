@@ -50,12 +50,10 @@
 					<h1>Bureaux des étudiants</h1>
 					<p>
 						Découvrez les bureaux des étudiants de l'IMT Atlantique qui vous accompagneront toute au long de cette année 2025
-                        sur nos 2 campus ! <br> <br>
+                        sur Nantes ! <br> <br>
                         Clique sur le bureau de ton choix pour plus de détails.
 					</p>
                     <div class="location-buttons bureaux-buttons">
-                        <button onclick="showImages('nantes')">Nantes</button>
-                        <button onclick="showImages('brest')">Brest</button>
                     </div>
 					<!-- Conteneur pour les images -->
                     <div class="small-images" id="image-container">
@@ -75,11 +73,9 @@
 				<div class="product-presentation">
 					<h1>Assos et clubs</h1>
 					<p>
-						Découvrez les assos et clubs de l'IMT Atlantique
+						Découvrez les assos et clubs de l'IMT Atlantique Nantes
 					</p>
                     <div class="location-buttons asso-buttons">
-                        <button onclick="showClub('nantesAsso')">Nantes</button>
-                        <button onclick="showClub('brestAsso')">Brest</button>
                     </div>
 					<!-- Conteneur pour les images -->
                     <div class="small-images" id="image-container2">
@@ -121,8 +117,18 @@
           <p>Nous contacter</p>
         </div>
       </div>
-      <p>BDE IMT Atlantique</p>
+      <p>&copy;BDE IMT Atlantique</p>
     </footer>
 
 
   <script src="../js/script.js"></script>
+  <script>
+    // Exécute la fonction dès que la page est chargée
+    document.addEventListener('DOMContentLoaded', function() {
+      showImages('nantes');
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      showClub('nantesAsso');
+    });
+  </script>

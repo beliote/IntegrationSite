@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emploi du Temps - Intégration 2025</title>
+  <link rel="stylesheet" href="../css/stylePage.css" />
+  <!-- Ajout du CSS de FullCalendar -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" />
+  <style>
+    /* Styles généraux et sélecteur de campus */
+    .campus-selector {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .campus-selector button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .campus-selector button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Style des cartes journalières */
+    .day-card {
+      background-color: #ffffff;
+      border: 2px solid #17223B;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 10px;
+      text-align: center;
+    }
+    .day-title {
+      background-color: #17223B;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    /* Nouvelle structure pour les événements */
+    .event {
+      background-color: #007BFF;
+      color: white;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .event-color-orga {
+      background-color: #C49D83; /* Bleu */
+      color: white;
+    }
+
+    .event-color-act {
+      background-color: #B384A7; /* Rouge */
+      color: white;
+    }
+
+    .event-color-eat {
+      background-color: #E3CD8B; /* Rouge */
+      color: white;
+    }
+
+    .event-color-night {
+      background-color: #e76f51; /* Rouge */
+      color: white;
+    }
+
+    .event-time {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .event-text {
+      /* Vous pouvez ajouter d'autres styles ici si nécessaire */
+    }
+
+    /* Version Desktop: affichage des 7 jours côte à côte */
+    .desktop-schedule-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    /* Pour desktop, on force la même largeur pour toutes les day cards */
+    @media (min-width: 768px) {
+      .desktop-schedule-container .day-card {
+        width: 150px; /* Ajustez la largeur selon le rendu souhaité */
+      }
+    }
+
+    /* Version Mobile: un seul jour affiché avec navigation */
+    .mobile-schedule-container {
+      position: relative;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .mobile-schedule-container .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #17223B;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .mobile-schedule-container .prev-btn {
+      left: -50px;
+    }
+    .mobile-schedule-container .next-btn {
+      right: -50px;
+    }
+
+    /* Affichage par défaut : version mobile en petit écran et desktop en grand écran */
+    .desktop-schedule-container { display: none; }
+    .mobile-schedule-container { display: block; }
+    @media (min-width: 768px) {
+      .desktop-schedule-container { display: flex; }
+      .mobile-schedule-container { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1><a href="../../">BDE IMT Atlantique</a></h1>
+      <button class="burger-menu" onclick="toggleMenu()">☰</button>
+      <div class="right" id="nav-menu">
+        <div class="dropdown">
+          <p><a href="../">Accueil</a></p>
+        </div>
+        <div class="dropdown">
+          <p class="dropdown-toggle">Intégration ▾</p>
+          <div class="dropdown-content">
+            <a href="../Integration">Planning</a>
+            <a href="../WEI">WEI</a>
+            <a href="../WEC">WEC</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <p class="dropdown-toggle">Vie Asso ▾</p>
+          <div class="dropdown-content">
+            <a href="../Fede">Mot de la Fédé</a>
+            <a href="../Bureaux">Bureaux des élèves</a>
+            <a href="../Bureaux">Assos & Clubs</a>
+            <a href="../VSS">VSS</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <p><a href="../index.html">Nous contacter</a></p>
+        </div>
+        
+      </div>
+    </nav>
+    <br><br><br>
+    <div class="sticker-title">
+      <h1>Intégration 2025</h1>
+    </div>
+    <section class="presentation first">
+      <div class="product-presentation">
+
+        <h1>Planning du campus de Brest</h1>
+        <br>
+        <h2>
+          <a href="#" onclick="openAgendaModal()">Cliquer pour ajouter le planning à mon agenda</a>
+        </h2>
+
+        <br><br>
+
+        <h1>Semaine 1 - Découverte</h1>
+        <!-- Version Desktop : Affichage des 7 jours côte à côte -->
+        <div class="desktop-schedule-container" id="desktopSchedule1">
+          <!-- Le contenu sera injecté ici via JS -->
+        </div>
+        
+        <!-- Version Mobile : Un seul jour affiché avec boutons de navigation -->
+        <div class="mobile-schedule-container" id="mobileSchedule">
+          <!-- Boutons de navigation -->
+          <button class="nav-btn prev-btn" onclick="prevDay1()">&#9664;</button>
+          <div id="mobileDayCard1">
+            <!-- Le contenu du jour sera injecté ici via JS -->
+          </div>
+          <button class="nav-btn next-btn" onclick="nextDay1()">&#9654;</button>
+        </div>
+
+
+        <br><br>
+
+        <h1>Semaine 2 - Adaptation</h1>
+        <!-- Sélecteur de campus -->
+        <div class="campus-selector">
+          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
+        </div>
+
+        <div class="desktop-schedule-container" id="desktopSchedule2">
+          <!-- Le contenu sera injecté ici via JS -->
+        </div>
+
+        <!-- Version Mobile : Un seul jour affiché avec boutons de navigation -->
+        <div class="mobile-schedule-container" id="mobileSchedule">
+          <!-- Boutons de navigation -->
+          <button class="nav-btn prev-btn" onclick="prevDay2()">&#9664;</button>
+          <div id="mobileDayCard2">
+            <!-- Le contenu du jour sera injecté ici via JS -->
+          </div>
+          <button class="nav-btn next-btn" onclick="nextDay2()">&#9654;</button>
+        </div>
+
+
+        <br><br>
+
+        <h1>Semaine 3 - Cohésion</h1>
+        <!-- Sélecteur de campus -->
+        <div class="campus-selector">
+          <button onclick="selectCampus1('nantes'); selectCampus2('nantes'); selectCampus3('nantes')">Nantes</button>
+          <button onclick="selectCampus1('brest'); selectCampus2('brest'); selectCampus3('brest')">Brest</button>
+        </div>
+
+
+        <div class="desktop-schedule-container" id="desktopSchedule3">
+          <!-- Le contenu sera injecté ici via JS -->
+        </div>
+
+        <!-- Version Mobile : Un seul jour affiché avec boutons de navigation -->
+        <div class="mobile-schedule-container" id="mobileSchedule">
+          <!-- Boutons de navigation -->
+          <button class="nav-btn prev-btn" onclick="prevDay3()">&#9664;</button>
+          <div id="mobileDayCard3">
+            <!-- Le contenu du jour sera injecté ici via JS -->
+          </div>
+          <button class="nav-btn next-btn" onclick="nextDay3()">&#9654;</button>
+        </div>
+
+
+
+      </div>
+    </section>
+  </header>
+
+  <footer>
+    <h5>Des questions ?</h5>
+    <div class="colonnes">
+      <div class="colonne">
+        <p><a href="../Integration">Planning de l'intégration</a></p>
+        <p><a href="../WEC">Week-end de cohésion</a></p>
+        <p><a href="../WEI">Week-end d'intégration</a></p>
+        
+      </div>
+      <div class="colonne">
+        <p><a href="../Bureaux">Bureaux de vie étudiante</a></p>
+        <p><a href="../Bureaux">Assos et clubs</a></p>
+        <p><a href="../Fede">Fédération des élèves</a></p>
+        <p><a href="../VSS">Prévention VSS</a></p>
+        <p>Règlements & paiements</p>
+      </div>
+      <div class="colonne">
+        <p>FAQ</p>
+        <p>Référents à contacter</p>
+        <p>Nous contacter</p>
+      </div>
+    </div>
+    <p>&copy;BDE IMT Atlantique</p>
+  </footer>
+
+  <script>
+    // Données de démonstration pour chaque campus
+    const BrestData1 = [
+      {
+        title: "Thu 21/08",
+        events: [
+          {eventType: "event-color-orga", time: "10:00 - 18:00", text: "Accueil des étudiants" },
+          {eventType: "event-color-eat", time: "19:00 - 22:00", text: "Barbecue" }          
+        ]
+      },
+      {
+        title: "Fri 22/08",
+        events: [
+          {eventType: "event-color-orga", time: "10:00 - 12:00", text: "Présentation & Visite du campus" },
+          {eventType: "event-color-act", time: "14:00 - 18:00", text: "Course d'orientation" },
+          {eventType: "event-color-night", time: "21:00 - 03:00", text: "Soirée Alphabet" }
+        ]
+      },
+      {
+        title: "Sat 23/08",
+        events: [
+          {eventType: "event-color-act", time: "15:00 - 23:00", text: "Visite de Brest" }
+        ]
+      },
+      {
+        title: "Sun 24/08",
+        events: [
+          {eventType: "event-color-eat",  time: "11:00 - 14:00", text: "Brunch" },
+          {eventType: "event-color-act", time: "14:00 - 18:00", text: "Après-midi plage" },
+          {eventType: "event-color-night", time: "21:00 - 03:00", text: "Soirée BDS" }
+        ]
+      }
+    ];
+
+    const BrestData2 = [
+      {
+        title: "Mon 25/08",
+        events: [
+          {eventType: "event-color-eat", time: "11:00 à 14:00", text: "Brunch" },
+          {eventType: "event-color-act", time: "14:00 à 18:00", text: "JO" },
+          {eventType: "event-color-night", time: "22:00 à 05:00", text: "BDA Pop Art" }
+        ]
+      },
+      {
+        title : "Tue 26/08",
+        events: [
+          {eventType: "event-color-orga", time: "10:00 à 12:00", text: "Mot de l'Admin et du BDE" },
+          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Cohésion des petites classes" },
+          {eventType: "event-color-night", time: "21:00 à 01:00", text: "Garden Party & Concert" }
+        ]
+      },
+      {
+        title : "Wed 27/08",
+        events: [
+          {eventType: "event-color-eat", time: "10:00 à 12:00", text: "Brunch" },
+          {eventType: "event-color-orga", time: "12:30", text: "Rentrée FISE A1" },
+          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Afterwork Olimpte & VSS" },
+          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée BDE" }
+        ]
+      },
+      {
+        title : "Thu 28/08",
+        events: [
+          {eventType: "event-color-eat", time: "18:00 à 20:00", text: "Cohésion des bâtiments" },
+          {eventType: "event-color-night", time: "20:00 à 01:00", text: "Soirée Casino" }
+        ]
+      },
+      {
+        title : "Fri 29/08",
+        events: [
+          {eventType: "event-color-act", time: "16:00 à 18:00", text: "Afterwork ASF x BDA" },
+          {eventType: "event-color-night", time: "21:00 à 05:00", text: "Soirée FIP" }
+        ]
+      },
+      {
+        title : "Sat 30/08 & Sun 31/08",
+        events: [
+          { time: "WE", text: "Week-end de cohésion" }
+        ]
+      }
+    ];
+
+    
+    const BrestData3 = [
+      {
+        title: "Mon 01/09",
+        events: [
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIP 2A" },
+          {eventType: "event-color-act", time: "17:00 à 19:00", text: "Afterwork Kryptoshpere x BDD x BDE" },
+          {eventType: "event-color-night", time: "21:00 à 00:00", text: "Soirée BDI" }
+        ]
+      },
+      {
+        title: "Tue 02/09",
+        events: [
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FIP 1A" },
+          {eventType: "event-color-act", time: "17:00 à 19:00", text: "Afterwork JA" },
+          {eventType: "event-color-night", time: "21:00 à 03:00", text: "Soirée Dellec" }
+        ]
+      },
+      {
+        title: "Wed 03/09",
+        events: [
+          {eventType: "event-color-orga", time: "08:30", text: "Rentrée FISE 2A" },
+          {eventType: "event-color-act", time: "16:00 à 19:00", text: "Laser Game BDS" },
+          {eventType: "event-color-night", time: "22:00 à 03:00", text: "Soirée Resel x BDE" }
+        ]
+      },
+      {
+        title: "Thu 04/09",
+        events: [
+          {eventType: "event-color-eat", time: "18:00 à 20:00", text: "Repas BDI" },
+          {eventType: "event-color-night", time: "21:00 à 00:00", text: "Quizz BDA" },
+        ]
+      },
+      {
+        title: "Fri 05/09 - Sun 07/09",
+        events: [
+          { time: "WE", text: "Week-end d'intégration" }
+        ]
+      }
+    ];
+
+    let currentDay1Index = 0;
+    let currentDay2Index = 0;
+    let currentDay3Index = 0;
+    let currentCampus1 = BrestData1;
+    let currentCampus2 = BrestData2;
+    let currentCampus3 = BrestData3;
+
+    // Fonction pour afficher un jour dans la version mobile 1
+    function renderMobileDay1() {
+      const container = document.getElementById("mobileDayCard1");
+      const day = currentCampus1[currentDay1Index];
+      let html = `<div class="day-card">
+                    <div class="day-title">${day.title}</div>`;
+      day.events.forEach(ev => {
+        html += `<div class="event ${ev.eventType}">
+                   <div class="event-time">${ev.time}</div>
+                   <div class="event-text">${ev.text}</div>
+                 </div>`;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher un jour dans la version mobile 2
+    function renderMobileDay2() {
+      const container = document.getElementById("mobileDayCard2");
+      const day = currentCampus2[currentDay2Index];
+      let html = `<div class="day-card">
+                    <div class="day-title">${day.title}</div>`;
+      day.events.forEach(ev => {
+        html += `<div class="event ${ev.eventType}">
+                   <div class="event-time">${ev.time}</div>
+                   <div class="event-text">${ev.text}</div>
+                 </div>`;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher un jour dans la version mobile 2
+    function renderMobileDay3() {
+      const container = document.getElementById("mobileDayCard3");
+      const day = currentCampus3[currentDay3Index];
+      let html = `<div class="day-card">
+                    <div class="day-title">${day.title}</div>`;
+      day.events.forEach(ev => {
+        html += `<div class="event ${ev.eventType}">
+                   <div class="event-time">${ev.time}</div>
+                   <div class="event-text">${ev.text}</div>
+                 </div>`;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher les jours dans la version desktop 1
+    function renderDesktopDays1() {
+      const container = document.getElementById("desktopSchedule1");
+      let html = "";
+      currentCampus1.forEach(day => {
+        html += `<div class="day-card">
+                   <div class="day-title">${day.title}</div>`;
+        day.events.forEach(ev => {
+          html += `<div class="event ${ev.eventType}">
+                     <div class="event-time">${ev.time}</div>
+                     <div class="event-text">${ev.text}</div>
+                   </div>`;
+        });
+        html += `</div>`;
+      });
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher les jours dans la version desktop 2
+    function renderDesktopDays2() {
+      const container = document.getElementById("desktopSchedule2");
+      let html = "";
+      currentCampus2.forEach(day => {
+        html += `<div class="day-card">
+                   <div class="day-title">${day.title}</div>`;
+        day.events.forEach(ev => {
+          html += `<div class="event ${ev.eventType}">
+                     <div class="event-time">${ev.time}</div>
+                     <div class="event-text">${ev.text}</div>
+                   </div>`;
+        });
+        html += `</div>`;
+      });
+      container.innerHTML = html;
+    }
+
+    // Fonction pour afficher les jours dans la version desktop 3
+    function renderDesktopDays3() {
+      const container = document.getElementById("desktopSchedule3");
+      let html = "";
+      currentCampus3.forEach(day => {
+        html += `<div class="day-card">
+                   <div class="day-title">${day.title}</div>`;
+        day.events.forEach(ev => {
+          html += `<div class="event ${ev.eventType}">
+                     <div class="event-time">${ev.time}</div>
+                     <div class="event-text">${ev.text}</div>
+                   </div>`;
+        });
+        html += `</div>`;
+      });
+      container.innerHTML = html;
+    }
+
+    // Initialisation
+    renderMobileDay1();
+    renderDesktopDays1();
+    renderMobileDay2();
+    renderDesktopDays2();
+    renderMobileDay3();
+    renderDesktopDays3();
+    
+    function prevDay1() {
+      currentDay1Index = (currentDay1Index === 0) ? currentCampus1.length - 1 : currentDay1Index - 1;
+      renderMobileDay1();
+    }
+    
+    function nextDay1() {
+      currentDay1Index = (currentDay1Index === currentCampus1.length - 1) ? 0 : currentDay1Index + 1;
+      renderMobileDay1();
+    }
+
+    function prevDay2() {
+      currentDay2Index = (currentDay2Index === 0) ? currentCampus2.length - 1 : currentDay2Index - 1;
+      renderMobileDay2();
+    }
+    
+    function nextDay2() {
+      currentDay2Index = (currentDay2Index === currentCampus2.length - 1) ? 0 : currentDay2Index + 1;
+      renderMobileDay2();
+    }
+
+    function prevDay3() {
+      currentDay3Index = (currentDay3Index === 0) ? currentCampus3.length - 1 : currentDay3Index - 1;
+      renderMobileDay3();
+    }
+    
+    function nextDay3() {
+      currentDay3Index = (currentDay3Index === currentCampus3.length - 1) ? 0 : currentDay3Index + 1;
+      renderMobileDay3();
+    }
+    
+    // Fonction pour gérer l'état "active" des boutons
+    function setActiveButton(category, campus) {
+      const buttons = document.querySelectorAll(`.${category} button`);
+      buttons.forEach(button => {
+        if (button.getAttribute('onclick').includes(campus)) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+    }
+
+    // Exemple de fonction pour la sélection de campus
+    function selectCampus1(campus) {
+      setActiveButton('campus-selector', campus);
+      currentCampus1 = campus === 'nantes' ? NantesData1 : BrestData1;
+      currentDay1Index = 0;
+      renderMobileDay1();
+      renderDesktopDays1();
+    }
+
+    function selectCampus2(campus) {
+      setActiveButton('campus-selector', campus);
+      currentCampus2 = campus === 'nantes' ? NantesData2 : BrestData2;
+      currentDay2Index = 0;
+      renderMobileDay2();
+      renderDesktopDays2();
+    }
+
+    function selectCampus3(campus) {
+      setActiveButton('campus-selector', campus);
+      currentCampus3 = campus === 'nantes' ? NantesData3 : BrestData3;
+      currentDay3Index = 0;
+      renderMobileDay3();
+      renderDesktopDays3();
+    }
+
+    // Fonction pour ouvrir la boîte modale
+    function openAgendaModal() {
+      const modal = document.getElementById('agendaModal');
+      modal.style.display = 'block';
+    }
+
+    // Fonction pour fermer la boîte modale
+    function closeAgendaModal() {
+      const modal = document.getElementById('agendaModal');
+      modal.style.display = 'none';
+    }
+
+    // Ferme la boîte modale si l'utilisateur clique en dehors
+    window.onclick = function(event) {
+      const modal = document.getElementById('agendaModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+    // Fonction pour copier un lien dans le presse-papiers
+    function copyToClipboard(inputId) {
+      const input = document.getElementById(inputId);
+      input.select();
+      input.setSelectionRange(0, 99999); // Pour les mobiles
+      document.execCommand("copy");
+      alert("Lien copié : " + input.value);
+    }
+  </script>
+    <script src="../js/script.js"></script>
+
+  <!-- Boîte modale pour le planning -->
+  <div id="agendaModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAgendaModal()">&times;</span>
+      <h2>Ajouter le planning à mon agenda</h2>
+      <br><br>
+      <h4>Ajoutez le planning de l'intégration à vos agendas personnels en copiant les liens suivants :</h4>
+      <br>
+      <h5>Campus de Brest :</h5>
+      <input type="text" value="https://example.com/planning-brest.ics" id="brestLink" readonly />
+      <button onclick="copyToClipboard('brestLink')">Copier</button>
+      <br><br><br>
+      <h3>Sur Google Calendar :</h3> <br>
+      <h4> Cliquez sur le bouton + puis "A partir d'une url" dans la section "Autres agendas" </h4>
+      <h4> Collez l'URL correspondante et ajoutez l'agenda </h4>
+      <br><br>
+      <h3>Sur Zimbra :</h3> <br>
+      <h4> Allez dans la section "Calendrier", puis dans les paramètres des calendriers </h4>
+      <h4> Ajoutez un calendrier externe, et sélectionnez l'option abonnement iCal </h4>
+      <h4> Collez l'URL correspondante et ajoutez le calendrier </h4>
+    </div>
+  </div>
+</body>
+</html>
